@@ -1,0 +1,16 @@
+Console.highWaterMark=88000
+eclipse.preferences.version=1
+org.eclipse.debug.ui.DebugView+org.eclipse.debug.ui.debugview.toolbar.toggleStepFilters=true
+org.eclipse.debug.ui.PREF_DELETE_CONFIGS_ON_PROJECT_DELETE=always
+org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<launchPerspectives/>\n
+org.eclipse.debug.ui.USE_STEP_FILTERS=true
+org.eclipse.debug.ui.build_before_launch=false
+org.eclipse.debug.ui.manage_view_perspectives=org.eclipse.debug.ui.DebugPerspective,
+org.eclipse.debug.ui.save_dirty_editors_before_launch=always
+org.eclipse.debug.ui.switch_perspective_on_suspend=always
+org.eclipse.debug.ui.user_view_bindings=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<viewBindings>\r\n<view id\="org.eclipse.ui.console.ConsoleView">\r\n<perspective id\="org.python.pydev.ui.PythonPerspective" userAction\="opened"/>\r\n<perspective id\="PyDev120" userAction\="opened"/>\r\n</view>\r\n</viewBindings>\r\n
+org.eclipse.debug.ui.wait_for_build=never
+pref_state_memento.org.eclipse.debug.ui.DebugVieworg.eclipse.debug.ui.DebugView=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<DebugViewMemento org.eclipse.debug.ui.BREADCRUMB_DROPDOWN_AUTO_EXPAND\="false"/>
+pref_state_memento.org.eclipse.debug.ui.VariableView=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<VariablesViewMemento org.eclipse.debug.ui.SASH_DETAILS_PART\="315" org.eclipse.debug.ui.SASH_VIEW_PART\="684"/>
+preferredDetailPanes=DefaultDetailPane\:DefaultDetailPane|
+preferredTargets=default\:default|org.eclipse.cdt.debug.ui.toggleCBreakpointTarget\:org.eclipse.cdt.debug.ui.toggleCBreakpointTarget|

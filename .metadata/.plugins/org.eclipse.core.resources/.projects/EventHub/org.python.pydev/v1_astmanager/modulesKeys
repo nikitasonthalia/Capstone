@@ -1,0 +1,6 @@
+MODULES_MANAGER_V2
+EventHub.EventHub.__init__|/Users/nikitasonthalia/Desktop/Capstone/EventHub/EventHub/EventHub/__init__.py
+EventHub.EventHub.settings|/Users/nikitasonthalia/Desktop/Capstone/EventHub/EventHub/EventHub/settings.py
+EventHub.EventHub.urls|/Users/nikitasonthalia/Desktop/Capstone/EventHub/EventHub/EventHub/urls.py
+EventHub.EventHub.wsgi|/Users/nikitasonthalia/Desktop/Capstone/EventHub/EventHub/EventHub/wsgi.py
+EventHub.manage|/Users/nikitasonthalia/Desktop/Capstone/EventHub/EventHub/manage.py
