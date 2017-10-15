@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'EventHubApp.SignUp',
+    'EventHubApp.events',
     'django_tables2',
 ]
 
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'EventHubApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'EventHubApp/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'EventHubApp/events/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

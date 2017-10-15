@@ -18,6 +18,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from EventHubApp.SignUp import views as core_views
 from django.contrib.auth import views as auth_views
+from EventHubApp.events import views as event_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,5 +26,5 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^getdata/$', core_views.getData, name='getData'),
-
+    url(r'^home/$', event_views.home, name='home')
 ]
