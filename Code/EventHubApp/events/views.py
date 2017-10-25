@@ -28,4 +28,20 @@ def home(request):
     context = {
 
     }
-    return HttpResponse(template.render(context,request))
+    return HttpResponse(template.render(context, request))
+
+# Displays florist.html
+def florist(request):
+    template = loader.get_template('events/florist.html')
+    context = {
+
+    }
+    return HttpResponse(template.render(context, request))
+
+# Displays florist1.html
+def florist1(request):
+    template = loader.get_template('events/florist1.html')
+    context = {
+
+    }
+    return HttpResponse(template.render(context, request))

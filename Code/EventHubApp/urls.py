@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^getdata/$', core_views.getData, name='getData'),
-    url(r'^home/$', event_views.home, name='home')
+    url(r'^home/$', event_views.home, name='home'),
+    url(r'florist/$', event_views.florist, name='florist'),
+    url(r'florist1/$', event_views.florist1, name='florist1')
 ]

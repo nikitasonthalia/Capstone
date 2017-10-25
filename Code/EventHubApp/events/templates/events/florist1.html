@@ -40,7 +40,7 @@
 				<a href="#"><span class="icon-user"></span> My Account</a> 
 				<a href="register.html"><span class="icon-edit"></span> Register </a> 
 				<a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
-				<a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> @ &#8377;0.0</span></a>
+				<a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> &#8377;0.0</span></a>
 			</div>
 		</div>
 	</div>
@@ -54,7 +54,7 @@ Lower Header Section
 <div class="row">
 	<div class="span4">
 	<h1>
-	<a class="logo" href="index.html"><span>EventHub</span> 
+	<a class="logo" href="http://localhost:8000/home"><span>EventHub</span> 
 		<img src="{% static "events/assets/img/logo.png" %}" alt="EventHub Logo">
 	</a>
 	</h1>
@@ -87,7 +87,7 @@ Navigation Bar Section
 		  </a>
 		  <div class="nav-collapse">
 			<ul class="nav">
-			  <li class="active"><a href="index.html">Home	</a></li>
+			  <li class="active"><a href="http://localhost:8000/home">Home</a></li>
 			  <li class=""><a href="list-view.html">List View</a></li>
 			  <li class=""><a href="grid-view.html">Grid View</a></li>
 			  <li class=""><a href="three-col.html">Three Column</a></li>
@@ -154,187 +154,121 @@ Body Section
 			<a class="shopBtn btn-block" href="#">Upcoming services <br><small>Click to view</small></a>
 			<br>
 			<br>
+
 	</div>
 	<div class="span9">
-	<div class="well np">
-		<div id="mymover" class="mover slide homCar">
-            <div class="mover-inner">
-			  <div class="item">
-                <img style="width:100%" src="{% static "events/assets/img/birthday_party.jpg"%}" alt="Birthday Party Package">
-                <!-- <div class="mover-caption">
-                      <h4>Birthday Party</h4>
-                      <p><span>Exciting</span></p>
-                </div>-->
-              </div>
-			  <div class="item">
-                <img style="width:100%" src="{% static "events/assets/img/engagement.jpg"%}" alt="Engagement">
-                <!-- <div class="mover-caption">
-                      <h4>Bootstrap Ecommerce template</h4>
-                      <p><span>Highly Google seo friendly</span></p>
-                </div>-->
-              </div>
-			  <div class="item active">
-                <img style="width:100%" src="{% static "events/assets/img/home_decoration_1.jpg"%}" alt="Home Decoration">
-                <!-- <div class="mover-caption">
-                      <h4>Twitter Bootstrap cart</h4>
-                      <p><span>Very easy to integrate and expand.</span></p>
-                </div>-->
-              </div>
-              <div class="item">
-                <img style="width:100%" src="{% static "events/assets/img/diwali.jpg"%}" alt="Diwali Celebrations">
-                <!-- <div class="mover-caption">
-                      <h4>Bootstrap templates integration</h4>
-                      <p><span>Compitable to many more opensource cart</span></p>
-                </div>-->
-              </div>
+    <ul class="breadcrumb">
+    <li><a href="http://localhost:8000/home">Home</a> <span class="divider">/</span></li>
+    <li><a href="http://localhost:8000/florist">Florist</a> <span class="divider">/</span></li>
+    <li class="active">Preview</li>
+    </ul>	
+	<div class="well well-small">
+	<div class="row-fluid">
+			<div class="span5">
+			<div id="mymover" class="mover slide cntr">
+                <div class="mover-inner">
+                  <div class="item active">
+                   <a href="#"> <img src="{% static "events/assets/img/florist1_1.jpg" %}" alt="" style="width:100%"></a>
+                  </div>
+                  <div class="item">
+                     <a href="#"> <img src="{% static "events/assets/img/florist1_2.jpg" %}" alt="" style="width:100%"></a>
+                  </div>
+                  <div class="item">
+                    <a href="#"> <img src="{% static "events/assets/img/florist1_3.jpg" %}" alt="" style="width:100%"></a>
+                  </div>
+                </div>
+                <a class="left mover-control" href="#mymover" data-slide="prev">‹</a>
+                <a class="right mover-control" href="#mymover" data-slide="next">›</a>
             </div>
-            <a class="left mover-control" href="#mymover" data-slide="prev">&lsaquo;</a>
-            <a class="right mover-control" href="#mymover" data-slide="next">&rsaquo;</a>
-          </div>
-        </div>
-<!--
-New Services
--->
-	<div class="well well-small">
-	<h3>New Services </h3>
-	<hr class="soften"/>
-		<div class="row-fluid">
-		<div id="newProductCar" class="mover slide">
-            <div class="mover-inner">
-			<div class="item active">
-			  <ul class="thumbnails">
-				<li class="span3">
-				<div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="#" class="tag"></a>
-					<a href="product_details.html"><img src="{% static "events/assets/img/event_planning.jpg"%}" alt="Social events planning"></a>
-				</div>
-				</li>
-				<li class="span3">
-				  <div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="#" class="tag"></a>
-					<a  href="product_details.html"><img src="{% static "events/assets/img/Volunteer.jpg"%}" alt="Volunteer Management"></a>
+			</div>
+			<div class="span7">
+				<h3>Blush Blooms</h3>
+				<hr class="soft"/>
+				
+				<form class="form-horizontal qtyFrm">
+<!-- 				  <div class="control-group">
+					<label class="control-label"><span>$140.00</span></label>
+					<div class="controls">
+					<input type="number" class="span6" placeholder="Qty.">
+					</div>
+				  </div> -->
+				
+				  <div class="control-group">
+					<label class="control-label"><span>Type</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Colorful Wrapped Bouquet</option>
+						  <option>Bright & Seasonal Smiles</option>
+						  <option>Soft And Feminine</option>
+						  <option>Designer's Choice</option>
+						  <option>Serene</option>
+						</select>
+					</div>
 				  </div>
-				</li>
-				<li class="span3">
-				  <div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="#" class="tag"></a>
-					<a  href="product_details.html"><img src="{% static "events/assets/img/event_branding.jpg"%}" alt="Events branding and marketing"></a>
+				  <div class="control-group">
+					<label class="control-label"><span>Flowers</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Roses</option>
+						  <option>Daisies</option>
+						  <option>Lilis</option>
+						  <option>Tulips</option>
+						  <option>Delphinium</option>
+						</select>
+					</div>
 				  </div>
-				</li>
-				<li class="span3">
-				  <div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a  href="product_details.html"><img src="{% static "events/assets/img/logistic.jpg"%}" alt="Logistics & operations management"></a>
+				  <div class="control-group">
+					<label class="control-label"><span>Size</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Standard</option>
+						  <option>Delux</option>
+						  <option>Premium</option>
+						</select>
+					</div>
 				  </div>
-				</li>
-			  </ul>
-			  </div>
-		   <div class="item">
-	<ul class="thumbnails">
-			<li class="span3">
-			  <div class="thumbnail">
-				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-				<a  href="product_details.html"><img src="{% static "events/assets/img/event-evaluation.jpg"%}" alt="Post-event evaluation"></a>
-			  </div>
-			</li>
-			<li class="span3">
-			  <div class="thumbnail">
-				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-				<a  href="product_details.html"><img src="{% static "events/assets/img/attorneys.jpg"%}" alt="attorneys"></a>
-			  </div>
-			</li>
-			<li class="span3">
-			  <div class="thumbnail">
-				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-				<a  href="product_details.html"><img src="{% static "events/assets/img/Sponsorship.jpg"%}" alt="Sponsorship"></a>
-			  </div>
-			</li>
-			<li class="span3">
-			  <div class="thumbnail">
-				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-				<a  href="product_details.html"><img src="{% static "events/assets/img/budget-management.jpg"%}" alt="budget-management"></a>
-			  </div>
-			</li>
-		  </ul>
-		  </div>
-		   </div>
-		  <a class="left mover-control" href="#newProductCar" data-slide="prev">&lsaquo;</a>
-            <a class="right mover-control" href="#newProductCar" data-slide="next">&rsaquo;</a>
-		  </div>
-		  </div>
-			  </div>
-			</li>
-		  </ul>
+				  <!-- <h4>100 items in stock</h4> -->
+				  <p>We will add more blooms and select the highest quality flowers we offer in this style</p>
+				  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart</button>
+				</form>
+			</div>
+			</div>
+				<hr class="softn clr"/>
+
+
+            <ul id="productDetail" class="nav nav-tabs">
+              <li class="active"><a href="#description" data-toggle="tab">Product Description</a></li>
+              <li class=""><a href="#product" data-toggle="tab">About the Product </a></li>
+			  <li class=""><a href="#us" data-toggle="tab">About Us </a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content tabWrapper">
+            <div class="tab-pane fade active in" id="description">
+			  <!-- <h4>Product Information</h4> -->
+				<p>This abundant bouquet of alstroemeria, known as Peruvian lilies, will add vibrant color to any room. This colorful bouquet contains 100 blooms of Peruvian Lilies, 4-6 blooms per stem. To allow these beautiful flowers to last much longer, they are shipped fresh, budding, and ready to bloom.Includes 100 blooms per bouquet, at least 17 stems of Peruvian lilies4-6 blooms per stemMeasures approximately 20" tallShips in custom ProFlowers packaging and gift box.</p>
+
+			</div>
+			<div class="tab-pane fade" id="product"> 
+			<ul>
+<li>Immediately upon arrival, remove flowers from box, cut stems, place in vase with fresh water and included flower food packet, and arrange flowers to your personal liking.</li>
+<li>Only from ProFlowers: Free clear glass vase included (may be different from picture).</li>
+<li>Flowers are shipped in bud form for optimal vase life; blooms will open in 2-3 days, as shown in product photo. Guaranteed fresh for 7 days or your money back.</li>
+<li>1 business day for processing. Overnight shipping to ensure freshness. No deliveries on Saturday, Sunday, or Monday.</li>
+<li>Observed holidays on Monday will delay delivery by one day.</li>
+</ul>
+			</div>
+			<div class="tab-pane fade" id="us">
+			<p>We offer outstanding professional service with a quality product and superior design. This has been our philosophy for over 50 years.
+Blush Blooms provides the highest standard of service to our customers. We have three convenient locations with the finest quality and largest selection of beautiful flowers, lush green and blooming plants, and elegant gifts for all occasions. Let Blush Blooms be your first choice for flowers.</p>
+
+			</div>
 		</div>
-	</div>
-	<!--
-	Featured Products
-	-->
-		<div class="well well-small">
-		  <h3><a class="btn btn-mini pull-right" href="products.html" title="View more">VIew More<span class="icon-plus"></span></a> Featured Products  </h3>
-		  <hr class="soften"/>
-		  <div class="row-fluid">
-		  <ul class="thumbnails">
-			<li class="span4">
-			  <div class="thumbnail">
-				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-				<a  href="product_details.html"><img src="{% static "events/assets/img/b.jpg"%}" alt=""></a>
-				<div class="caption">
-				  <h5>Floral Services</h5>
-				  <h4>
-					  <a class="defaultBtn" href="product_details.html" title="Click to view"><span class="icon-zoom-in"></span></a>
-					  <a class="shopBtn" href="#" title="add to cart"><span class="icon-plus"></span></a>
-					  <span class="pull-right">&#8377;5220.00</span>
-				  </h4>
-				</div>
-			  </div>
-			</li>
-			<li class="span4">
-			  <div class="thumbnail">
-				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-				<a  href="product_details.html"><img src="{% static "events/assets/img/catering.jpg"%}" alt=""></a>
-				<div class="caption">
-				  <h5>Catering Services</h5>
-				  <h4>
-					  <a class="defaultBtn" href="product_details.html" title="Click to view"><span class="icon-zoom-in"></span></a>
-					  <a class="shopBtn" href="#" title="add to cart"><span class="icon-plus"></span></a>
-					  <span class="pull-right">&#8377;12252.00</span>
-				  </h4>
-				</div>
-			  </div>
-			</li>
-			<li class="span4">
-			  <div class="thumbnail">
-				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-				<a  href="product_details.html"><img src="{% static "events/assets/img/home_decoration.jpg"%}" alt=""/></a>
-				<div class="caption">
-				  <h5>Home decoration</h5>
-				  <h4>
-					  <a class="defaultBtn" href="product_details.html" title="Click to view"><span class="icon-zoom-in"></span></a>
-					  <a class="shopBtn" href="#" title="add to cart"><span class="icon-plus"></span></a>
-					  <span class="pull-right">&#8377;35522.00</span>
-				  </h4>
-				</div>
-			  </div>
-			</li>
-		  </ul>	
-	</div>
-	</div>
+        </div>
+
+</div>
+</div>
+</div>
+
 	
-	<div class="well well-small">
-	<a class="btn btn-mini pull-right" href="#">View more <span class="icon-plus"></span></a>
-	Popular Products 
-	</div>
-	<hr>
-	<div class="well well-small">
-	<a class="btn btn-mini pull-right" href="#">View more <span class="icon-plus"></span></a>
-	Best selling Products 
-	</div>
-	</div>
-	</div>
 <!--
 Footer
 -->
