@@ -1,0 +1,12 @@
+python manage.py makemigrations events
+python manage.py migrate
+
+CREATE TABLE `events_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(50) NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `category_url` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `events_category` VALUES (1,'Florist','Floral Services','florist'),(2,'Home Decoration','Catering Services','homeDecoration'),(3,'Catering','Catering Services','catering'),(4,'Birthday Party','Birthday Party Services','birthdayParty'),(5,'Attorneys','Attorneys Services','attorney'),(6,'Budget Management','Budget Management Services','budget'),(7,'Branding and Marketing','Branding and Marketing Services','brandMarket'),(8,'Volunteer Management','Volunteer Management Services','volunteer'),(9,'Engagement & Wedding','Engagement & Wedding Services','engagement'),(10,'Post-event Evaluation','Post-event Evaluation Services','postEvent'),(11,'Sponsorship','Sponsorship Services','sponsorship'),(12,'Logistics','Logistics Services','logistics');
