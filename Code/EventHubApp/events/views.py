@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
+from django.shortcuts import render_to_response
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views import generic
@@ -11,24 +12,29 @@ from django.views import generic
 #from .paint import paintDraw
 import importlib.util
 import sys
+from .models import *
 
+categoryName = Category.objects.order_by("category_name")
 
 #def index(request):
 #    return HttpResponse("Hello Amruta. You're at the polls index.")
 
-def index(request):
-    template = loader.get_template('events/home.html')
-    context = {
-    }
-    return HttpResponse(template.render(context, request))
+# def index(request):
+#     template = loader.get_template('events/home.html')
+#     context = {
+#     }
+#     return HttpResponse(template.render(context, request))
 
 # Displays home.html
 def home(request):
     template = loader.get_template('events/home.html')
+    #categoryName = Category.objects.order_by("category_name")
     context = {
 
     }
-    return HttpResponse(template.render(context, request))
+    #userName = User.objects.filter(username='Amruta')
+    #return HttpResponse(template.render(context, request))
+    return render(request, 'events/home.html', {'categoryName': categoryName})
 
 # Displays florist.html
 def florist(request):
@@ -36,7 +42,9 @@ def florist(request):
     context = {
 
     }
-    return HttpResponse(template.render(context, request))
+    #return HttpResponse(template.render(context, request))
+    return render(request, 'events/florist.html', {'categoryName': categoryName})
+
 
 # Displays florist1.html
 def florist1(request):
@@ -44,4 +52,5 @@ def florist1(request):
     context = {
 
     }
-    return HttpResponse(template.render(context, request))
+    #return HttpResponse(template.render(context, request))
+    return render(request, 'events/florist1.html', {'categoryName': categoryName})

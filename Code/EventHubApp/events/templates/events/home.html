@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{% static 'events/assets/font-awesome/css/font-awesome.css' %}" />
 <!-- Favicons -->
 <link rel="shortcut icon" href="{% static 'events/assets/ico/favicon.ico' %}" />
-
+{% load django_tables2 %}
 <head>
     <meta charset="utf-8">
     <title>EventHamper</title>
@@ -129,18 +129,11 @@ Body Section
 <div id="sidebar" class="span3">
 <div class="well well-small">
 	<ul class="nav nav-list">
-		<li><a href="http://localhost:8000/florist"><span class="icon-chevron-right"></span>Florist</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Catering</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Home Decoration</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Birthday Party</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Engagement & Wedding</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Volunteer Management</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Branding and Marketing</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Logistics</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Budget Management</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Attorneys</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Post-event Evaluation</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>Sponsorship</a></li>
+        {% block content %}
+            {% for category in categoryName %}
+              <li><a href="http://localhost:8000/{{ category.category_url }}"><span class="icon-chevron-right"></span>{{ category.category_name }}</a></li>
+              {% endfor %}
+        {% endblock %}
 	</ul>
 </div>
 <div class="well well-small alert alert-warning cntr">
