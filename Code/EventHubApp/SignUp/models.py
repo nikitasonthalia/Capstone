@@ -127,3 +127,14 @@ class Test(models.Model):
     class Meta:
         managed = False
         db_table = 'test'
+        
+class Category(models.Model):
+    category_id = models.IntegerField
+    category_name = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    category_url = models.CharField(max_length=50)
+
+    def __str__(self):  # __unicode__ on Python 2
+        #return self.category_name
+        return '%s %s' % (self.category_name, self.category_url)
+
