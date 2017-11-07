@@ -28,5 +28,9 @@ urlpatterns = [
     url(r'^getdata/$', core_views.getData, name='getData'),
     url(r'^home/$', event_views.home, name='home'),
     url(r'florist/$', event_views.florist, name='florist'),
-    url(r'florist1/$', event_views.florist1, name='florist1')
+    url(r'florist1/$', event_views.florist1, name='florist1'),
+    url(r'register/$', event_views.register, name='register'),
+    url(r'getForm/$', event_views.getForm, name='getForm'),
+    url(r'registerServiceDetails/$', event_views.registerServiceDetails, name='registerServiceDetails'),
+    url(r'getServiceDetails/$', event_views.getServiceDetails, name='getServiceDetails'),
 ]
