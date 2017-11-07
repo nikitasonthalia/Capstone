@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from EventHubApp.SignUp.models import Test
+from EventHubApp.events.models import Category
 
 
 @login_required
@@ -25,8 +25,23 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 # Create your views here.
 def getData(request):
-    list1 = Test.objects.all()
-    print('---list1',list1)
-    for i in list1:
-        print('----',i.testid)
+    list1 = Category.objects.all()
+#     print('---list1',list1)
+#     for i in list1:
+#         print('----',i.testid)
     return render(request, 'post_list.html', {'list1' : list1})
+
+# def selectview(request):
+#     item  = Test.objects.all() # use filter() when you have sth to filter ;)
+#     form = request.POST # you seem to misinterpret the use of form from django and POST data. you should take a look at [Django with forms][1]
+#     # you can remove the preview assignment (form =request.POST)
+#     if request.method == 'POST':
+#         selected_item = get_object_or_404(Item, pk=request.POST.get('item_id'))
+#         # get the user you want (connect for example) in the var "user"
+#         user.item = selected_item
+#         user.save()
+#  
+#       # Then, do a redirect for example
+#  
+#     return render_to_response ('select/item.html', {'items':item}, context_instance =  RequestContext(request),)
+

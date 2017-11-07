@@ -8,5 +8,12 @@
     </head>
     <body>
         {% render_table list1 %}
+        <form method="POST">
+			<select name="item_id">
+				{% for list in list1 %}
+    				<option value="{{ list.category_id }}">{{ list.category_name }}</option>
+				{% endfor %}
+			</select>
+		</form>
     </body>
 </html>
