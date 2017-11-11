@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'EventHubApp.SignUp',
     'EventHubApp.events',
+    'EventHubApp.search',
     'django_tables2',
+    'EventHubApp.registration',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +135,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+#STATIC_ROOT = os.path.join(BASE_DIR, 'EventHubApp/static/')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [ os.path.join(BASE_DIR, "EventHubApp/static/")]
+#STATIC_URL = os.path.join(BASE_DIR, '/static/')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'EventHubApp/events/static/events/assets/img/media')
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'EventHubApp/static/events/assets/img/media/')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'EventHubApp/events/static/events/assets/img/media')
+

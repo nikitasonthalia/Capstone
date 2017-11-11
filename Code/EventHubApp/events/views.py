@@ -18,8 +18,10 @@ from django.views.generic import TemplateView
 from django.core.files.storage import FileSystemStorage
 #Import Folder model
 #from filer.models.foldermodels import Folder
+from EventHubApp.search.models import User, UserProfile, Category
 
-categoryName = Category.objects.order_by("category_name")
+categoryName = Category.objects.order_by("category_name")[:12]
+
 
 
 # def index(request):
@@ -33,38 +35,38 @@ categoryName = Category.objects.order_by("category_name")
 
 # Displays home.html
 def home(request):
-    template = loader.get_template('events/home.html')
+    template = loader.get_template('home.html')
     # categoryName = Category.objects.order_by("category_name")
     context = {
 
     }
     # userName = User.objects.filter(username='Amruta')
     # return HttpResponse(template.render(context, request))
-    return render(request, 'events/home.html', {'categoryName': categoryName})
+    return render(request, 'home.html', {'categoryName': categoryName})
 
 
 # Displays florist.html
 def florist(request):
-    template = loader.get_template('events/florist.html')
+    template = loader.get_template('florist.html')
     context = {
 
     }
     # return HttpResponse(template.render(context, request))
-    return render(request, 'events/florist.html', {'categoryName': categoryName})
+    return render(request, 'florist.html', {'categoryName': categoryName})
 
 
 # Displays florist1.html
 def florist1(request):
-    template = loader.get_template('events/florist1.html')
+    template = loader.get_template('florist1.html')
     context = {
 
     }
     # return HttpResponse(template.render(context, request))
-    return render(request, 'events/florist1.html', {'categoryName': categoryName})
+    return render(request, 'florist1.html', {'categoryName': categoryName})
 
 
 # Displays register.html
-def register(request):
+"""def register(request):
     template = loader.get_template('events/register.html')
     #form = ServiceProvidersForm()
     context = {
@@ -79,11 +81,11 @@ def registerServiceDetails(request):
     context = {
 
     }
-    return render(request, 'events/registerServiceDetails.html', {'categoryName': categoryName})
+    return render(request, 'events/registerServiceDetails.html', {'categoryName': categoryName})"""
 
 
 # Registration Form
-def getForm(request):
+"""def getForm(request):
     serviceProiderInstance = ServiceProviders()
     serviceProiderInstance.title = request.POST.get('title')
     serviceProiderInstance.inputFname = request.POST.get('inputFname')
@@ -128,4 +130,5 @@ def getServiceDetails(request):
     SPDetails.aboutProduct = request.POST.get('sprod')
     SPDetails.aboutUs = request.POST.get('sabout')
     SPDetails.save()
-    return render(request, 'events/home.html')
+    return render(request, 'events/home.html')"""
+

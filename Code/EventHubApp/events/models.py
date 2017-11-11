@@ -2,6 +2,7 @@ from django.db import models
 from django.forms import ModelForm
 #from django.core.validators import RegexValidator
 from datetime import date
+from EventHubApp.search.models import User, UserProfile
 
 # Create your models here.
 class User(models.Model):
@@ -21,7 +22,8 @@ class User(models.Model):
         return self.username
 
 class Category(models.Model):
-    category_id = models.IntegerField
+    #category_id = models.IntegerField
+    id = models.IntegerField
     category_name = models.CharField(max_length=50)
     description = models.CharField(max_length=50)
     category_url = models.CharField(max_length=50)
@@ -46,15 +48,3 @@ class ServiceProviders(models.Model):
     phone = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
     serviceDesc = models.CharField(max_length=50)
-
-
-class ServiceProviderDetails(models.Model):
-    spID = models.CharField(max_length=50)
-    serviceName = models.CharField(max_length=50)
-    type = models.CharField(max_length=50)
-    offers = models.CharField(max_length=50)
-    package = models.CharField(max_length=50)
-    serviceDetails = models.CharField(max_length=50)
-    productDescription = models.CharField(max_length=50)
-    aboutProduct = models.CharField(max_length=50)
-    aboutUs = models.CharField(max_length=50)

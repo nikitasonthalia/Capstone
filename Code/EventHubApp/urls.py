@@ -19,6 +19,11 @@ from django.contrib import admin
 from EventHubApp.SignUp import views as core_views
 from django.contrib.auth import views as auth_views
 from EventHubApp.events import views as event_views
+from EventHubApp.registration import views as registration_views
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,8 +34,11 @@ urlpatterns = [
     url(r'^home/$', event_views.home, name='home'),
     url(r'florist/$', event_views.florist, name='florist'),
     url(r'florist1/$', event_views.florist1, name='florist1'),
-    url(r'register/$', event_views.register, name='register'),
-    url(r'getForm/$', event_views.getForm, name='getForm'),
-    url(r'registerServiceDetails/$', event_views.registerServiceDetails, name='registerServiceDetails'),
-    url(r'getServiceDetails/$', event_views.getServiceDetails, name='getServiceDetails'),
-]
+    #url(r'register/$', event_views.register, name='register'),
+    #url(r'getForm/$', event_views.getForm, name='getForm'),
+    #url(r'registerServiceDetails/$', event_views.registerServiceDetails, name='registerServiceDetails'),
+    #url(r'getServiceDetails/$', event_views.getServiceDetails, name='getServiceDetails'),
+    #url(r'saveUserProfile/$', event_views.saveUserProfile, name='saveUserProfile'),
+    url(r'registerServiceDetails/$', registration_views.registerServiceDetails, name='registerServiceDetails'),
+    url(r'saveUserProfile/$', registration_views.saveUserProfile, name='saveUserProfile'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
