@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import default
 
 # Create your models here.
 class User(models.Model):
@@ -18,7 +19,7 @@ class User(models.Model):
         return self.username
 
 class Category(models.Model):
-    category_id = models.IntegerField
+    category_id = models.IntegerField(primary_key=True, default=0)
     category_name = models.CharField(max_length=50)
     description = models.CharField(max_length=50)
     category_url = models.CharField(max_length=50)

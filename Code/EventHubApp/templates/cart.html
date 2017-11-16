@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th> </th>
+        </tr>
+        {% for item in cart %}
+        <tr>
+            <td>{{ item.product.profile_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.total_price }}</td>
+            <td> 
+            	<a href={% url 'deletefromcart' product_id=item.product.profile_id %}>Remove</a>
+        	</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -19,8 +19,10 @@ from django.contrib import admin
 from EventHubApp.SignUp import views as core_views
 from django.contrib.auth import views as auth_views
 from EventHubApp.events import views as event_views
+from EventHubApp.search import views as search_views
 
 urlpatterns = [
+#     url(r'/', core_views.getData, name='getData'),
     url(r'^admin/', admin.site.urls),
     url(r'^signup/$', core_views.signup, name='signup'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
@@ -28,5 +30,10 @@ urlpatterns = [
     url(r'^getdata/$', core_views.getData, name='getData'),
     url(r'^home/$', event_views.home, name='home'),
     url(r'florist/$', event_views.florist, name='florist'),
-    url(r'florist1/$', event_views.florist1, name='florist1')
+    url(r'florist1/$', event_views.florist1, name='florist1'),
+    url(r'getprofile/$', search_views.getprofile, name='getprofile'),
+    url(r'getdetail/$', search_views.getdetail, name='getdetail'),
+    url(r'addtocart/(?P<product_id>[0-9]+)$', search_views.add_to_cart, name='addtocart'),
+    url(r'deletefromcart/(?P<product_id>[0-9]+)$', search_views.remove_from_cart, name='deletefromcart')
+    
 ]

@@ -1,5 +1,9 @@
+pip install django-cart
+
 python manage.py makemigrations events
 python manage.py migrate
+
+
 
 CREATE TABLE `events_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

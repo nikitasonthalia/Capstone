@@ -1,0 +1,111 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load customfilter %}
+{% static '' as baseUrl %}
+{% block content %}
+
+<div class="well well-small">
+	<div class="row-fluid">
+			<div class="span5">
+			<div id="mymover" class="mover slide cntr">
+                <div class="mover-inner">
+                  <div class="item">
+                  	{% for i in range %}
+                  		{% with y=forloop.counter|stringformat:"s" %}
+                  		{% with pic='pic'|add:y %}
+	                  		{% if profile.pic1 %}
+	                   			<a href="#"> <img src="/static/images/{{ profile|get_item:pic }}" alt="" style="width:100%"></a>
+	                   		{% endif %}
+	                   	{% endwith %}
+    					{% endwith %}
+                   	{% endfor %}
+                  </div>
+                </div>
+                <a class="left mover-control" href="#mymover" data-slide="prev">‹</a>
+                <a class="right mover-control" href="#mymover" data-slide="next">›</a>
+            </div>
+			</div>
+			<div class="span7">
+				<h3>Blush Blooms</h3>
+				<hr class="soft">
+				
+				<form class="form-horizontal qtyFrm" action={% url 'addtocart' product_id=profile.profile_id %}>
+<!-- 				  <div class="control-group">
+					<label class="control-label"><span>$140.00</span></label>
+					<div class="controls">
+					<input type="number" class="span6" placeholder="Qty.">
+					</div>
+				  </div> -->
+				
+				  <div class="control-group">
+					<label class="control-label"><span>Type</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Colorful Wrapped Bouquet</option>
+						  <option>Bright &amp; Seasonal Smiles</option>
+						  <option>Soft And Feminine</option>
+						  <option>Designer's Choice</option>
+						  <option>Serene</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="control-group">
+					<label class="control-label"><span>Flowers</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Roses</option>
+						  <option>Daisies</option>
+						  <option>Lilis</option>
+						  <option>Tulips</option>
+						  <option>Delphinium</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="control-group">
+					<label class="control-label"><span>Size</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Standard</option>
+						  <option>Delux</option>
+						  <option>Premium</option>
+						</select>
+					</div>
+				  </div>
+				  <!-- <h4>100 items in stock</h4> -->
+				  <p>We will add more blooms and select the highest quality flowers we offer in this style</p>
+				  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart</button>
+				</form>
+			</div>
+			</div>
+				<hr class="softn clr">
+
+
+            <ul id="productDetail" class="nav nav-tabs">
+              <li class="active"><a href="#description" data-toggle="tab">Product Description</a></li>
+              <li class=""><a href="#product" data-toggle="tab">About the Product </a></li>
+			  <li class=""><a href="#us" data-toggle="tab">About Us </a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content tabWrapper">
+            <div class="tab-pane fade active in" id="description">
+			  <!-- <h4>Product Information</h4> -->
+				<p>This abundant bouquet of alstroemeria, known as Peruvian lilies, will add vibrant color to any room. This colorful bouquet contains 100 blooms of Peruvian Lilies, 4-6 blooms per stem. To allow these beautiful flowers to last much longer, they are shipped fresh, budding, and ready to bloom.Includes 100 blooms per bouquet, at least 17 stems of Peruvian lilies4-6 blooms per stemMeasures approximately 20" tallShips in custom ProFlowers packaging and gift box.</p>
+
+			</div>
+			<div class="tab-pane fade" id="product"> 
+			<ul>
+<li>Immediately upon arrival, remove flowers from box, cut stems, place in vase with fresh water and included flower food packet, and arrange flowers to your personal liking.</li>
+<li>Only from ProFlowers: Free clear glass vase included (may be different from picture).</li>
+<li>Flowers are shipped in bud form for optimal vase life; blooms will open in 2-3 days, as shown in product photo. Guaranteed fresh for 7 days or your money back.</li>
+<li>1 business day for processing. Overnight shipping to ensure freshness. No deliveries on Saturday, Sunday, or Monday.</li>
+<li>Observed holidays on Monday will delay delivery by one day.</li>
+</ul>
+			</div>
+			<div class="tab-pane fade" id="us">
+			<p>We offer outstanding professional service with a quality product and superior design. This has been our philosophy for over 50 years.
+Blush Blooms provides the highest standard of service to our customers. We have three convenient locations with the finest quality and largest selection of beautiful flowers, lush green and blooming plants, and elegant gifts for all occasions. Let Blush Blooms be your first choice for flowers.</p>
+
+			</div>
+		</div>
+        </div>
+		
+{% endblock %}

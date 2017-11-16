@@ -130,6 +130,33 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
+class EventsCategory(models.Model):
+    category_name = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    category_url = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'events_category'
+
+
+class EventsUser(models.Model):
+    user_id = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
+    password = models.CharField(max_length=60)
+    street1 = models.CharField(max_length=30)
+    street2 = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    pin_number = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'events_user'
+
+
 class Rating(models.Model):
     rating_id = models.IntegerField(primary_key=True)
     profile = models.ForeignKey('UserProfile', models.DO_NOTHING)

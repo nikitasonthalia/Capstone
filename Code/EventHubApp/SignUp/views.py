@@ -2,15 +2,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from EventHubApp.events.models import Category
+from EventHubApp.search.models import Category
 
 
-@login_required
+# @login_required
 def home(request):
-    return render(request, 'home.html')
+    list1 = Category.objects.all()
+
+    return render(request, 'home.html', {'list1' : list1})
 
 
 def signup(request):
+    print('here')
+    return render(request, 'signup.html')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -26,10 +30,10 @@ def signup(request):
 # Create your views here.
 def getData(request):
     list1 = Category.objects.all()
-#     print('---list1',list1)
+    print('---list1',list1)
 #     for i in list1:
 #         print('----',i.testid)
-    return render(request, 'post_list.html', {'list1' : list1})
+    return render(request, 'home.html', {'list1' : list1})
 
 # def selectview(request):
 #     item  = Test.objects.all() # use filter() when you have sth to filter ;)

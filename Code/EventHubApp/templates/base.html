@@ -97,12 +97,13 @@
 					  </a>
 					  <div class="nav-collapse">
 						<ul class="nav">
-						  <li class="active"><a href="index.html">Home	</a></li>
-						  <li class=""><a href="list-view.html">List View</a></li>
-						  <li class=""><a href="grid-view.html">Grid View</a></li>
-						  <li class=""><a href="three-col.html">Three Column</a></li>
-						  <li class=""><a href="four-col.html">Four Column</a></li>
-						  <li class=""><a href="general.html">General Content</a></li>
+						  <li class="active">
+						  	<select name="item_id" onChange="window.location.href='/getprofile?category_id='+this.value" >
+						  		<option value="" >Select </option>
+								{% for list in list1 %}
+    								<option value="{{ list.category_id }}"> {{ list.category_name }} </option>
+								{% endfor %}
+							</select></li>
 						</ul>
 						<form action="#" class="navbar-search pull-left">
 						  <input type="text" placeholder="Search" class="search-query span2" style="padding:14px 14px">
@@ -138,11 +139,10 @@
 				<div class="row">
 					<div id="sidebar" class="span3">
 						<div class="well well-small">
-							<ul class="nav nav-list">
-									{% for category in categoryName %}
-									  <li><a href="http://localhost:8000/{{ category.category_url }}"><span class="icon-chevron-right"></span>{{ category.category_name }}</a></li>
-									  {% endfor %}
-							</ul>
+						Catagory:
+								{% for list in list1 %}
+              						<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>{{ list.category_name }}</a></li>
+								{% endfor %}
 						</div>
 						<div class="well well-small alert alert-warning cntr">
 								  <h2>50% Discount</h2>
