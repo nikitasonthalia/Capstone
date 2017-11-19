@@ -76,6 +76,27 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class CartCart(models.Model):
+    creation_date = models.DateTimeField()
+    checked_out = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'cart_cart'
+
+
+class CartItem(models.Model):
+    quantity = models.IntegerField()
+    unit_price = models.DecimalField(max_digits=18, decimal_places=2)
+    object_id = models.IntegerField()
+    cart = models.ForeignKey(CartCart, models.DO_NOTHING)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'cart_item'
+
+
 class Category(models.Model):
     category_id = models.IntegerField(primary_key=True)
     category_name = models.CharField(max_length=45)
@@ -221,3 +242,19 @@ class UserType(models.Model):
     class Meta:
         managed = False
         db_table = 'user_type'
+
+
+class Userprofiledetails(models.Model):
+    servicename = models.CharField(db_column='serviceName', max_length=50)  # Field name made lowercase.
+    type = models.CharField(max_length=50)
+    offers = models.CharField(max_length=50)
+    package = models.CharField(max_length=50)
+    servicedetails = models.CharField(db_column='serviceDetails', max_length=50)  # Field name made lowercase.
+    productdescription = models.CharField(db_column='productDescription', max_length=50)  # Field name made lowercase.
+    aboutproduct = models.CharField(db_column='aboutProduct', max_length=50)  # Field name made lowercase.
+    aboutus = models.CharField(db_column='aboutUs', max_length=50)  # Field name made lowercase.
+    profile = models.ForeignKey(UserProfile, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'userprofiledetails'

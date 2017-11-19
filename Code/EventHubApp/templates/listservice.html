@@ -10,7 +10,7 @@
 			{% for profile in profiles %}
 				<li class="span4">
 					<div class="thumbnail">
-						<!-- <a href="http://localhost:8000/florist1" class="overlay"></a> -->
+						<a href="/getdetail?profile_id={{profile.profile_id}}" class="overlay"></a>
 						<a class="zoomTool" href="/getdetail?profile_id={{profile.profile_id}}" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
 						<a href=""><img src="/static/images/{{profile.pic1}}" alt=""></a>
 						<div class="caption cntr">

@@ -21,6 +21,21 @@
 			<script src="{% static 'events/assets/js/jquery.easing-1.3.min.js' %}"></script>
 			<script src="{% static 'events/assets/js/jquery.scrollTo-1.4.3.1-min.js' %}"></script>
 			<script src="{% static 'events/assets/js/shop.js' %}"></script>
+			<script type="text/javascript">
+			    function displayDropDown(myStr, myOptions) {
+			        var res = myStr.split(";");
+			        var selectElement = document.getElementById(myOptions);
+			        for (var i = 0; i < res.length; i++) {
+			
+			            var option = document.createElement("option");
+			            option.text = res[i];
+			            option.value = res[i];
+			            selectElement.add(option);
+			
+			        }
+			    }
+
+			</script>
 			<!--[if IE 7]>
 				<link href="css/font-awesome-ie7.min.css" rel="stylesheet">
 			<![endif]-->
@@ -32,7 +47,7 @@
 		  <!-- Placed at the end of the document so the pages load faster -->
 	  </head>
 	  <body>
-		<div>
+	
 			<!--
 				Upper Header Section
 			-->
@@ -98,16 +113,18 @@
 					  <div class="nav-collapse">
 						<ul class="nav">
 						  <li class="active">
-						  	<select name="item_id" onChange="window.location.href='/getprofile?category_id='+this.value" >
+						  	<select name="item_id" onChange="window.location.href='/getprofile?category_id='+this.value"  style="margin: 5px;">
 						  		<option value="" >Select </option>
 								{% for list in list1 %}
     								<option value="{{ list.category_id }}"> {{ list.category_name }} </option>
 								{% endfor %}
 							</select></li>
 						</ul>
-						<form action="#" class="navbar-search pull-left">
-						  <input type="text" placeholder="Search" class="search-query span2" style="padding:14px 14px">
+						<form action={% url 'getallprofile' %} class="navbar-search pull-left" method="post">
+							{% csrf_token %}
+						  <input type="text" name="searchText" placeholder="Search" class="search-query span1" >
 						</form>
+						
 						<ul class="nav pull-right">
 							<li class="dropdown">
 								<a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
@@ -144,6 +161,13 @@
               						<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>{{ list.category_name }}</a></li>
 								{% endfor %}
 						</div>
+						<div class="well well-small">
+						Search:
+							<li><a href="/getprofileonprice"><span class="icon-chevron-right"></span>Price</a></li>
+							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>Rating</a></li>
+							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>State</a></li>
+							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>City</a></li>
+						</div>
 						<div class="well well-small alert alert-warning cntr">
 								  <h2>50% Discount</h2>
 								  <p>
@@ -156,14 +180,14 @@
 							<br>
 							<br>
 						</div>
-						<div class="span9"></div>
+						<div class="span9">
 						<main>
 						  {% block content %}
 						  {% endblock %}
 						</main>
 					</div>
 				</div>
-
+			</div>
 					<!--
 				Footer
 				-->

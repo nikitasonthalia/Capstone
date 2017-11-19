@@ -13,8 +13,6 @@ def home(request):
 
 
 def signup(request):
-    print('here')
-    return render(request, 'signup.html')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -22,6 +20,7 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            request.session["userid"] = 1
             login(request, user)
             return redirect('home')
     else:
@@ -33,6 +32,7 @@ def getData(request):
     print('---list1',list1)
 #     for i in list1:
 #         print('----',i.testid)
+    request.session["userid"] = 1
     return render(request, 'home.html', {'list1' : list1})
 
 # def selectview(request):

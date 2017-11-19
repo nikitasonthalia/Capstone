@@ -34,6 +34,11 @@ urlpatterns = [
     url(r'getprofile/$', search_views.getprofile, name='getprofile'),
     url(r'getdetail/$', search_views.getdetail, name='getdetail'),
     url(r'addtocart/(?P<product_id>[0-9]+)$', search_views.add_to_cart, name='addtocart'),
-    url(r'deletefromcart/(?P<product_id>[0-9]+)$', search_views.remove_from_cart, name='deletefromcart')
+    url(r'deletefromcart/(?P<product_id>[0-9]+)$', search_views.remove_from_cart, name='deletefromcart'),
+    url(r'getallprofile/$', search_views.getallprofile, name='getallprofile'),
+    url(r'getprofileonprice/$', search_views.getprofileonprice, name='getprofileonprice'),
+    url(r'rating/$', auth_views.login, {'template_name': 'rating.html'}, name='rating'),
+
+    
     
 ]
