@@ -20,6 +20,11 @@ from EventHubApp.SignUp import views as core_views
 from django.contrib.auth import views as auth_views
 from EventHubApp.events import views as event_views
 from EventHubApp.search import views as search_views
+from EventHubApp.registration import views as registration_views
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
 #     url(r'/', core_views.getData, name='getData'),
@@ -38,7 +43,12 @@ urlpatterns = [
     url(r'getallprofile/$', search_views.getallprofile, name='getallprofile'),
     url(r'getprofileonprice/$', search_views.getprofileonprice, name='getprofileonprice'),
     url(r'rating/$', auth_views.login, {'template_name': 'rating.html'}, name='rating'),
-
-    
-    
+    #url(r'register/$', event_views.register, name='register'),
+    #url(r'getForm/$', event_views.getForm, name='getForm'),
+    #url(r'registerServiceDetails/$', event_views.registerServiceDetails, name='registerServiceDetails'),
+    #url(r'getServiceDetails/$', event_views.getServiceDetails, name='getServiceDetails'),
+    #url(r'saveUserProfile/$', event_views.saveUserProfile, name='saveUserProfile'),
+    url(r'registerServiceDetails/$', registration_views.registerServiceDetails, name='registerServiceDetails'),
+    url(r'saveUserProfile/$', registration_views.saveUserProfile, name='saveUserProfile'),
 ]
+

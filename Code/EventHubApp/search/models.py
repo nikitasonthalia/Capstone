@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+import os
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=80)
@@ -98,9 +98,15 @@ class CartItem(models.Model):
 
 
 class Category(models.Model):
-    category_id = models.IntegerField(primary_key=True)
+    #category_id = models.IntegerField(primary_key=True)
+    category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(max_length=45)
     description = models.CharField(max_length=45, blank=True, null=True)
+    category_url = models.CharField(max_length=50)
+
+    def __str__(self):  # __unicode__ on Python 2
+        #return self.category_name
+        return '%s %s' % (self.category_name, self.category_url)
 
     class Meta:
         managed = False
@@ -215,18 +221,24 @@ class User(models.Model):
         managed = False
         db_table = 'user'
 
+def get_upload_path(instance, filename):
+    upload_dir =  os.path.join("EventHubApp/static/events/assets/img/media/","Test")
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+    return os.path.join("Test", filename)
 
 class UserProfile(models.Model):
-    profile_id = models.IntegerField(primary_key=True)
+    #profile_id = models.IntegerField(primary_key=True)
+    profile_id = models.AutoField(primary_key=True)
     category = models.ForeignKey(Category, models.DO_NOTHING)
     user = models.ForeignKey(User, models.DO_NOTHING)
     profile_name = models.CharField(max_length=45, blank=True, null=True)
     description = models.CharField(max_length=45, blank=True, null=True)
-    pic1 = models.TextField(blank=True, null=True)
-    pic2 = models.TextField(blank=True, null=True)
-    pic3 = models.TextField(blank=True, null=True)
-    pic4 = models.TextField(blank=True, null=True)
-    pic5 = models.TextField(blank=True, null=True)
+    pic1 = models.ImageField(upload_to='test')
+    pic2 = models.ImageField(blank=True, null=True)
+    pic3 = models.ImageField(blank=True, null=True)
+    pic4 = models.ImageField(blank=True, null=True)
+    pic5 = models.ImageField(blank=True, null=True)
     price = models.FloatField()
 
     class Meta:
