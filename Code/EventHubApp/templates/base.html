@@ -42,149 +42,166 @@
     <!--[if lt IE 9]>
 				<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 			<![endif]-->
-    {% load django_tables2 %}
-    <!-- Placed at the end of the document so the pages load faster -->
-</head>
-<body>
-<!-- <div> -->
-    <!--
-        Upper Header Section
-    -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="topNav">
-            <div class="container">
-                <div class="alignR">
-                    <div class="pull-left socialNw">
-                        <a href="#"><span class="icon-twitter"></span></a>
-                        <a href="#"><span class="icon-facebook"></span></a>
-                        <a href="#"><span class="icon-youtube"></span></a>
-                        <a href="#"><span class="icon-tumblr"></span></a>
-                    </div>
-                    <a class="active" href="index.html"> <span class="icon-home"></span> Home</a>
-                    <a href="#"><span class="icon-user"></span> My Account</a>
-                    <a href="register.html"><span class="icon-edit"></span> Register </a>
-                    <a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
-                    <a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span
-                            class="badge badge-warning"> @ &#8377;0.0</span></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--
-    Lower Header Section
-    -->
-    <div class="container">
-        <div id="gototop"></div>
-        <header id="header">
-            <div class="row">
-                <div class="span4">
-                    <h1>
-                        <a class="logo" href="index.html"><span>EventHub</span>
-                            <img src="{% static "events/assets/img/logo.png" %}" alt="EventHub Logo">
-                        </a>
-                    </h1>
-                </div>
-                <div class="span4">
-                    <div class="offerNoteWrapper">
-                        <h1 class="dotmark">
-                            <i class="icon-cut"></i>
-                            Event Planning is now available @ &#8377;149
-                        </h1>
-                    </div>
-                </div>
-                <div class="span4 alignR">
-                    <p><br> <strong id="textColor"> Support (24/7) : 0000 1234 000 </strong><br><br></p>
-                    <span class="btn btn-mini">[ 0 ] <span class="icon-shopping-cart"></span></span>
-                    <span class="btn btn-warning btn-mini">&#8377;</span>
-                </div>
-            </div>
-        </header>
-        <!--
-        Navigation Bar Section
-        -->
-        <div class="navbar">
-            <div class="navbar-inner" style="padding-right:0px">
-                <div class="container">
-                    <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="index.html">Home </a></li>
-                            <li class=""><a href="list-view.html">List View</a></li>
-                            <li class=""><a href="grid-view.html">Grid View</a></li>
-                            <li class=""><a href="three-col.html">Three Column</a></li>
-                            <li class=""><a href="four-col.html">Four Column</a></li>
-                            <li class=""><a href="general.html">General Content</a></li>
-                        </ul>
-                        <form action="#" class="navbar-search pull-left">
-                            <input type="text" placeholder="Search" class="search-query span2">
-                        </form>
-                        <ul class="nav pull-right">
-                            <li class="dropdown">
-                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span
-                                        class="icon-lock"></span> Login <b class="caret"></b></a>
-                                <div class="dropdown-menu">
-                                    <form class="form-horizontal loginFrm">
-                                        <div class="control-group">
-                                            <input type="text" class="span2" id="inputEmail" placeholder="Email">
-                                        </div>
-                                        <div class="control-group">
-                                            <input type="password" class="span2" id="inputPassword"
-                                                   placeholder="Password">
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox"> Remember me
-                                            </label>
-                                            <button type="submit" class="shopBtn btn-block">Sign in</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--
-        Side Section
-        -->
-        <div class="row">
-            <div id="sidebar" class="span3">
-                <div class="well well-small">
-                    <ul class="nav nav-list">
-                        {% for category in categoryName %}
-                            <li><a href="http://localhost:8000/{{ category.category_url }}"><span
-                                    class="icon-chevron-right"></span>{{ category.category_name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="well well-small alert alert-warning cntr">
-                    <h2>50% Discount</h2>
-                    <p>
-                        only valid for today's online order. <br><a class="defaultBtn" href="#">Click here </a>
-                    </p>
-                </div>
-                <div class="well well-small"><a href="#"><img src="{% static "events/assets/img/paypal.jpg" %}"
-                                                              alt="payment method paypal"></a></div>
+	{% load django_tables2 %}
+		  <!-- Placed at the end of the document so the pages load faster -->
+	  </head>
+	  <body>
+	
+			<!--
+				Upper Header Section
+			-->
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="topNav">
+					<div class="container">
+						<div class="alignR">
+							<div class="pull-left socialNw">
+								<a href="#"><span class="icon-twitter"></span></a>
+								<a href="#"><span class="icon-facebook"></span></a>
+								<a href="#"><span class="icon-youtube"></span></a>
+								<a href="#"><span class="icon-tumblr"></span></a>
+							</div>
+							<a class="active" href="index.html"> <span class="icon-home"></span> Home</a>
+							<a href="#"><span class="icon-user"></span> My Account</a>
+							<a href="register.html"><span class="icon-edit"></span> Register </a>
+							<a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
+							<a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> @ &#8377;0.0</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--
+			Lower Header Section
+			-->
+			<div class="container">
+				<div id="gototop"> </div>
+				<header id="header">
+					<div class="row">
+						<div class="span4">
+							<h1>
+							<a class="logo" href="index.html"><span>EventHub</span>
+								<img src="{% static "events/assets/img/logo.png" %}" alt="EventHub Logo">
+							</a>
+							</h1>
+						</div>
+						<div class="span4">
+							<div class="offerNoteWrapper">
+								<h1 class="dotmark">
+								<i class="icon-cut"></i>
+								Event Planning is now available @ &#8377;149
+								</h1>
+							</div>
+						</div>
+						<div class="span4 alignR">
+							<p><br> <strong id="textColor"> Support (24/7) :  0000 1234 000 </strong><br><br></p>
+							<span class="btn btn-mini">[ 0 ] <span class="icon-shopping-cart"></span></span>
+							<span class="btn btn-warning btn-mini">&#8377;</span>
+						</div>
+					</div>
+				</header>
+				<!--
+				Navigation Bar Section
+				-->
+				<div class="navbar">
+				  <div class="navbar-inner" style="padding-right:0px">
+					<div class="container">
+					  <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					  </a>
+					  <div class="nav-collapse">
+						<ul class="nav">
+						  <li class="active">
+						  	<select name="item_id" onChange="window.location.href='/getprofile?category_id='+this.value"  style="margin: 5px;">
+						  		<option value="" >Select </option>
+								{% for list in list1 %}
+    								<option value="{{ list.category_id }}"> {{ list.category_name }} </option>
+								{% endfor %}
+							</select></li>
+						</ul>
+						<form action={% url 'getallprofile' %} class="navbar-search pull-left" method="post">
+							{% csrf_token %}
+						  <input type="text" name="searchText" placeholder="Search" class="search-query span1" >
+						</form>
+						
+						<ul class="nav pull-right">
+							<li class="dropdown">
+								<a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
+								<div class="dropdown-menu">
+									<form action = "{% url 'signin' %}" class="form-horizontal loginFrm" method = "get">
+{#                    <form action = "" class="form-horizontal loginFrm" method = "get">#}
 
-                <a class="shopBtn btn-block" href="#">Upcoming services <br>
-                    <small>Click to view</small>
-                </a>
-                <br>
-                <br>
-            </div>
-            <div class="span9">
-            <main>
-                {% block content %}
-                {% endblock %}
-            </main>
-            </div>
-        </div>
-    </div>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+              <div class="control-group">
+               <input type="text" class="span2" id="inputEmail" placeholder="Username" name = "username">
+              </div>
+              <div class="control-group">
+               <input type="password" class="span2" id="inputPassword" placeholder="Password" name = "password">
+              </div>
+
+              <div class="control-group">
+
+               <button type="submit" class="shopBtn btn-block">Sign in</button>
+              </div>
+            </form>
+                    <div class="control-group">
+                        <a href="forgotPass.html" class="form-horizontal loginFrm" >Forgot Password?</a>
+                    </div>
+                    <form  action = "{% url 'signup' %}" class="form-horizontal loginFrm" method="get">
+                        {% csrf_token %}
+                        <div class="control-group">
+                       <p>Don't have account?</p>
+                       <button type="submit" class="shopBtn btn-block">Sign Up</button>
+                    </div>
+                    </form>
+
+								</div>
+							</li>
+						</ul>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<!--
+				Side Section
+				-->
+				<div class="row">
+					<div id="sidebar" class="span3">
+						<div class="well well-small">
+						Catagory:
+								{% for list in list1 %}
+              						<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>{{ list.category_name }}</a></li>
+								{% endfor %}
+						</div>
+						<div class="well well-small">
+						Search:
+							<li><a href="/getprofileonprice"><span class="icon-chevron-right"></span>Price</a></li>
+							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>Rating</a></li>
+							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>State</a></li>
+							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>City</a></li>
+						</div>
+						<div class="well well-small alert alert-warning cntr">
+								  <h2>50% Discount</h2>
+								  <p>
+									 only valid for today's online order. <br><a class="defaultBtn" href="#">Click here </a>
+								  </p>
+						</div>
+						<div class="well well-small" ><a href="#"><img src="{% static "events/assets/img/paypal.jpg" %}" alt="payment method paypal"></a></div>
+
+							<a class="shopBtn btn-block" href="#">Upcoming services <br><small>Click to view</small></a>
+							<br>
+							<br>
+						</div>
+						<div class="span9">
+						<main>
+						  {% block content %}
+						  {% endblock %}
+						</main>
+					</div>
+				</div>
+			</div>
 
     <!--
 Footer

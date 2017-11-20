@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import include, url
 from django.contrib import admin
 from EventHubApp.SignUp import views as core_views
 from django.contrib.auth import views as auth_views
@@ -24,16 +24,18 @@ from EventHubApp.registration import views as registration_views
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+admin.autodiscover()
 
 
 urlpatterns = [
 #     url(r'/', core_views.getData, name='getData'),
     url(r'^admin/', admin.site.urls),
-    url(r'^signup/$', core_views.signup, name='signup'),
+    url(r'^test/$', core_views.test, name='test'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^getdata/$', core_views.getData, name='getData'),
-    url(r'^home/$', event_views.home, name='home'),
+    url(r'^home/$', core_views.home, name='home'),
     url(r'florist/$', event_views.florist, name='florist'),
     url(r'florist1/$', event_views.florist1, name='florist1'),
     url(r'getprofile/$', search_views.getprofile, name='getprofile'),
@@ -50,5 +52,12 @@ urlpatterns = [
     #url(r'saveUserProfile/$', event_views.saveUserProfile, name='saveUserProfile'),
     url(r'registerServiceDetails/$', registration_views.registerServiceDetails, name='registerServiceDetails'),
     url(r'saveUserProfile/$', registration_views.saveUserProfile, name='saveUserProfile'),
+    url(r'contact/$', event_views.contact, name='contact'),
+    url(r'contactUs/$', event_views.contactUs, name='contactUs'),
+    url(r'aboutUs/$', event_views.aboutUs, name='aboutUs'),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^signup/$', event_views.signup, name='signup'),
+    url(r'^signin/$', event_views.signin, name='signin'),
+    url(r'^signupSubmit/$', event_views.signupSubmit, name='signupSubmit'),
 ]
 

@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'EventHubApp.search.templatetags',
     'django_tables2',
     'cart',
-    'django_tables2',
     'EventHubApp.registration',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

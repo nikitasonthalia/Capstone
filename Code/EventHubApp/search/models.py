@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 import os
 
 class AuthGroup(models.Model):
@@ -102,11 +103,10 @@ class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(max_length=45)
     description = models.CharField(max_length=45, blank=True, null=True)
-    category_url = models.CharField(max_length=50)
 
     def __str__(self):  # __unicode__ on Python 2
         #return self.category_name
-        return '%s %s' % (self.category_name, self.category_url)
+        return '%s' % (self.category_name)
 
     class Meta:
         managed = False
@@ -206,16 +206,19 @@ class Test(models.Model):
 
 
 class User(models.Model):
-    user_id = models.IntegerField(primary_key=True)
-    username = models.CharField(unique=True, max_length=45)
-    password = models.CharField(max_length=45)
-    street1 = models.CharField(max_length=45)
-    street2 = models.CharField(max_length=45, blank=True, null=True)
-    city = models.CharField(max_length=45)
-    state = models.CharField(max_length=45)
-    country = models.CharField(max_length=45)
-    pin_number = models.IntegerField()
-    phone = models.IntegerField(blank=True, null=True)
+    user_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    username = models.CharField(max_length=50,unique=True)
+    password = models.CharField(max_length=60)
+    street1 = models.CharField(max_length=30)
+    street2 = models.CharField(max_length=50, blank=True, null=True)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    pin_number = models.IntegerField
+    phone = PhoneNumberField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -256,17 +259,17 @@ class UserType(models.Model):
         db_table = 'user_type'
 
 
-class Userprofiledetails(models.Model):
-    servicename = models.CharField(db_column='serviceName', max_length=50)  # Field name made lowercase.
-    type = models.CharField(max_length=50)
-    offers = models.CharField(max_length=50)
-    package = models.CharField(max_length=50)
-    servicedetails = models.CharField(db_column='serviceDetails', max_length=50)  # Field name made lowercase.
-    productdescription = models.CharField(db_column='productDescription', max_length=50)  # Field name made lowercase.
-    aboutproduct = models.CharField(db_column='aboutProduct', max_length=50)  # Field name made lowercase.
-    aboutus = models.CharField(db_column='aboutUs', max_length=50)  # Field name made lowercase.
-    profile = models.ForeignKey(UserProfile, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'userprofiledetails'
+# class Userprofiledetails(models.Model):
+#     servicename = models.CharField(db_column='serviceName', max_length=50)  # Field name made lowercase.
+#     type = models.CharField(max_length=50)
+#     offers = models.CharField(max_length=50)
+#     package = models.CharField(max_length=50)
+#     servicedetails = models.CharField(db_column='serviceDetails', max_length=50)  # Field name made lowercase.
+#     productdescription = models.CharField(db_column='productDescription', max_length=50)  # Field name made lowercase.
+#     aboutproduct = models.CharField(db_column='aboutProduct', max_length=50)  # Field name made lowercase.
+#     aboutus = models.CharField(db_column='aboutUs', max_length=50)  # Field name made lowercase.
+#     profile = models.ForeignKey(UserProfile, models.DO_NOTHING)
+# 
+#     class Meta:
+#         managed = False
+#         db_table = 'userprofiledetails'

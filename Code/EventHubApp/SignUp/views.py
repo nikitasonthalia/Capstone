@@ -25,7 +25,8 @@ def signup(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    list1 = Category.objects.all()
+    return render(request, 'signup.html', {'list1' : list1})
 # Create your views here.
 def getData(request):
     list1 = Category.objects.all()
@@ -34,6 +35,14 @@ def getData(request):
 #         print('----',i.testid)
     request.session["userid"] = 1
     return render(request, 'home.html', {'list1' : list1})
+
+def test(request):
+    list1 = Category.objects.all()
+    print('---list1',list1)
+#     for i in list1:
+#         print('----',i.testid)
+    request.session["userid"] = 1
+    return render(request, 'test.html', {'list1' : list1})
 
 # def selectview(request):
 #     item  = Test.objects.all() # use filter() when you have sth to filter ;)

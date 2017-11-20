@@ -129,8 +129,8 @@ Body Section
 <div class="well well-small">
 	<ul class="nav nav-list">
         {% block content %}
-            {% for category in categoryName %}
-              <li><a href="http://localhost:8000/{{ category.category_url }}"><span class="icon-chevron-right"></span>{{ category.category_name }}</a></li>
+            {% for category in list1 %}
+              <li><a href=""><span class="icon-chevron-right"></span>{{ category.category_name }}</a></li>
               {% endfor %}
         {% endblock %}
 	</ul>

@@ -7,7 +7,7 @@ from EventHubApp.search.models import Category
 from EventHubApp.search.models import UserProfile
 from EventHubApp.search.models import Rating
 from EventHubApp.search.models import User
-from EventHubApp.search.models import Userprofiledetails
+from EventHubApp.registration.models import Userprofiledetails
 from cart.cart import Cart
 from django.template.context_processors import request
 

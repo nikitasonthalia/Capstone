@@ -10,11 +10,12 @@ import os
 from .models import *
 from django.views.generic import TemplateView
 from django.core.files.storage import FileSystemStorage
-# Import Folder model
-# from filer.models.foldermodels import Folder
 from EventHubApp.search.models import User, UserProfile, Category
+from django.contrib import messages
+
 
 categoryName = Category.objects.order_by("category_name")
+
 
 # Displays registerServiceDetails.html
 def registerServiceDetails(request):
@@ -26,6 +27,20 @@ def registerServiceDetails(request):
     }
     return render(request, 'registerServiceDetails.html', {'userCategories': userCategories, 'categoryName': categoryName})
 
+"""def registerServiceDetails(request):
+    if request.user.is_authenticated():
+        userCategories = Category.objects.exclude(
+            category_id__in=UserProfile.objects.filter(user_id=1).values_list('category_id', flat=True))
+        template = loader.get_template('registerServiceDetails.html')
+        context = {
+
+        }
+        return render(request, 'registerServiceDetails.html',
+                      {'userCategories': userCategories, 'categoryName': categoryName})
+    else:
+        messages.warning(request, 'Please correct the error below.')
+        return render(request, "registerServiceDetails.html")"""
+
 
 # Create your views here.
 def saveCategory(newCat):
@@ -35,7 +50,12 @@ def saveCategory(newCat):
     categoryInstance.category_url = newCat
     categoryInstance.save()
 
+
 def saveUserProfile(request):
+    if 'userid' in request.session:
+        userid = request.session.get('userid')
+    else:
+        userid = 0
     categoryFlag = 0
     profileDetails = UserProfile()
     serviceCategory = request.POST.get('category')
@@ -55,11 +75,11 @@ def saveUserProfile(request):
         profileDetails.description = categoryDetails.category_name
 
     # userDetails = User.objects.all()
-    userDetails = User.objects.get(username='Amruta')
-    profileDetails.user_id = userDetails.user_id
+#     userDetails = User.objects.get(username='Amruta')
+    profileDetails.user_id = userid
 
-    #if not os.path.exists("EventHubApp/static/events/assets/img/media/" + "Test"):
-        #os.makedirs("EventHubApp/static/events/assets/img/media/" + "Test")
+    # if not os.path.exists("EventHubApp/static/events/assets/img/media/" + "Test"):
+    # os.makedirs("EventHubApp/static/events/assets/img/media/" + "Test")
 
     fs = FileSystemStorage()
 
@@ -94,14 +114,14 @@ def saveUserProfile(request):
 
     profileDetails.save()
 
-    SPDetails = UserProfileDetails()
+    SPDetails = Userprofiledetails()
 
     if categoryFlag == 1:
         categoryDetails = Category.objects.get(category_name=serviceCategory)
     else:
         categoryDetails = Category.objects.get(category_name=request.POST.get('newCategory'))
 
-    SPDetails.profile = UserProfile.objects.get(user_id=userDetails.user_id, category_id=categoryDetails.category_id)
+    SPDetails.profile = UserProfile.objects.get(user_id=userid, category_id=categoryDetails.category_id)
     SPDetails.serviceName = request.POST.get('sname')
     SPDetails.type = request.POST.get('stype')
     SPDetails.offers = request.POST.get('soffer')
@@ -113,3 +133,4 @@ def saveUserProfile(request):
     SPDetails.save()
 
     return render(request, 'home.html', {'categoryName': categoryName})
+
