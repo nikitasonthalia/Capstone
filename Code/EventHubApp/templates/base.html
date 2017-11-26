@@ -36,7 +36,7 @@
 	            function sortProfilebyPrice(profiles){
                     jsonProfilesList=JSON.parse(profiles);
                     var profileList = [];
-                    for (var counter in jsonProfilesList) {
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
                         profileList.push(jsonProfilesList[counter]);
                     }
                     profileList.sort(
@@ -50,7 +50,7 @@
                 function sortProfilebyName(profiles){
                     jsonProfilesList=JSON.parse(profiles);
                     var profileList = [];
-                    for (var counter in jsonProfilesList) {
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
                         profileList.push(jsonProfilesList[counter]);
                     }
                     profileList.sort(
