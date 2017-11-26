@@ -58,21 +58,21 @@ def saveUserProfile(request):
     categoryFlag = 0
     profileDetails = UserProfile()
     serviceCategory = request.POST.get('category')
+
     if serviceCategory == 'Other':
         newCat = request.POST.get('newCategory')
         saveCategory(newCat)
 
         categoryInfo = Category.objects.get(category_name=newCat)
         profileDetails.category_id = categoryInfo.category_id
-        profileDetails.profile_name = newCat
         profileDetails.description = newCat
     else:
         categoryFlag = 1
         categoryDetails = Category.objects.get(category_name=serviceCategory)
         profileDetails.category_id = categoryDetails.category_id
-        profileDetails.profile_name = categoryDetails.category_name
         profileDetails.description = categoryDetails.category_name
 
+    profileDetails.profile_name = request.POST.get('profileName')
     # userDetails = User.objects.all()
 #     userDetails = User.objects.get(username='Amruta')
     profileDetails.user_id = userid
