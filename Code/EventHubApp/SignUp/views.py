@@ -3,13 +3,18 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from EventHubApp.search.models import Category
+from EventHubApp.registration.models import States
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 
 # @login_required
 def home(request):
     list1 = Category.objects.all()
-
-    return render(request, 'home.html', {'list1' : list1})
+    stateNames = States.objects.order_by().values('city_state').distinct()
+    cityNames = States.objects.order_by().values('city_name').distinct()
+    #print("request.session: ", request.session)
+    return render(request, 'home.html', {'list1' : list1, 'stateNames': stateNames, 'cityNames':cityNames})
 
 
 def signup(request):
@@ -26,10 +31,11 @@ def signup(request):
     else:
         form = UserCreationForm()
     list1 = Category.objects.all()
-    return render(request, 'signup.html', {'list1' : list1})
+    return render(request, 'signup.html', {'list1' : list1,  'stateNames': stateNames, 'cityNames':cityNames})
 # Create your views here.
 def getData(request):
     list1 = Category.objects.all()
+    stateNames = States.objects.order_by().values('city_state').distinct()
     print('---list1',list1)
 #     for i in list1:
 #         print('----',i.testid)
@@ -43,6 +49,8 @@ def test(request):
 #         print('----',i.testid)
     request.session["userid"] = 1
     return render(request, 'test.html', {'list1' : list1})
+
+
 
 # def selectview(request):
 #     item  = Test.objects.all() # use filter() when you have sth to filter ;)
