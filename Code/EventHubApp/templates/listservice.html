@@ -1,5 +1,6 @@
 {% extends 'base.html' %} 
 {% load static %}
+{% load ratings %}
 {% static '' as baseUrl %}
 {% block content %}
 
@@ -18,7 +19,7 @@
 							<p>{{profile.price}}</p>
 							<!-- <h4><a class="shopBtn" href="#" title="add to cart"> View </a></h4> -->
 							<div class="actionList">
-								<a class="pull-left" href="#">Add to Wish List </a> 
+								{% ratings profile %}
 								<a class="pull-left" href="#"> Add to Compare </a>
 							</div> 
 							<br class="clr">

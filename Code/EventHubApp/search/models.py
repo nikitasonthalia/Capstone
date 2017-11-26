@@ -185,7 +185,7 @@ class EventsUser(models.Model):
 
 
 class Rating(models.Model):
-    rating_id = models.IntegerField(primary_key=True)
+    rating_id = models.AutoField(primary_key=True)
     profile = models.ForeignKey('UserProfile', models.DO_NOTHING)
     rating = models.IntegerField()
     description = models.CharField(max_length=45, blank=True, null=True)

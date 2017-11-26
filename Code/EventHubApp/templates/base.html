@@ -20,6 +20,8 @@
     <script src="{% static 'events/assets/js/jquery.easing-1.3.min.js' %}"></script>
     <script src="{% static 'events/assets/js/jquery.scrollTo-1.4.3.1-min.js' %}"></script>
     <script src="{% static 'events/assets/js/shop.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+	<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
     <script type="text/javascript">
 			    function displayDropDown(myStr, myOptions) {
 			        var res = myStr.split(";");
@@ -33,6 +35,62 @@
 			
 			        }
 			    }
+			    function sortProfilebyPrice(profiles){
+                    jsonProfilesList=JSON.parse(profiles);
+                    var profileList = [];
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
+                        profileList.push(jsonProfilesList[counter]);
+                    }
+                    profileList.sort(
+                        function (p1,p2) {
+                            return p1.fields.price-p2.fields.price;
+                        }
+                    );
+                    renderProfiles(profileList);
+                }
+
+                function sortProfilebyName(profiles){
+                    jsonProfilesList=JSON.parse(profiles);
+                    var profileList = [];
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
+                        profileList.push(jsonProfilesList[counter]);
+                    }
+                    profileList.sort(
+                        function (p1,p2) {
+                            return p1.fields.profile_name.localeCompare(p2.fields.profile_name);
+                        }
+                    );
+                    renderProfiles(profileList);
+                }
+
+				function renderProfiles(profileList) {
+					var mainDiv = document.getElementById("listservicecontent");
+					mainDiv.innerHTML = "";
+
+					mainDiv.class='row-fluid';
+					var content = '<ul class="thumbnails">';
+					for (var i = 0; i < profileList.length; i++) {
+					    content += '<li class="span4">'
+							content += '<div class="thumbnail">'
+								content += '<a href="/getdetail?profile_id='+profileList[i].pk+'" class="overlay"></a>'
+								content += '<a class="zoomTool" href="/getdetail?profile_id='+profileList[i].pk+'" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>'
+								content += '<a href="/getdetail?profile_id='+profileList[i].pk+'"><img src="/static/images/'+profileList[i].fields.pic1+'" alt=""></a>'
+								content += '<div class="caption cntr">'
+									content += '<p>'+profileList[i].fields.profile_name+'</p>'
+									content += '<p>'+profileList[i].fields.price+'</p>'
+									content += '<!-- <h4><a class="shopBtn" href="#" title="add to cart"> View </a></h4> -->'
+									content += '<div class="actionList">'
+										content += '<a class="pull-left" href="#">Counter: </a>'
+										content += '<a class="pull-left" href="#">Rating:  </a>'
+									content += '</div>'
+									content += '<br class="clr">'
+								content += '</div>'
+							content += '</div>'
+						content += '</li>'
+		            }
+					content += '</ul>';
+					mainDiv.innerHTML = content;
+		        }
 
 			</script>
     <!--[if IE 7]>
@@ -60,11 +118,11 @@
 								<a href="#"><span class="icon-youtube"></span></a>
 								<a href="#"><span class="icon-tumblr"></span></a>
 							</div>
-							<a class="active" href="index.html"> <span class="icon-home"></span> Home</a>
-							<a href="#"><span class="icon-user"></span> My Account</a>
-							<a href="register.html"><span class="icon-edit"></span> Register </a>
-							<a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
-							<a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> @ &#8377;0.0</span></a>
+							<a class="active" href="http://localhost:8000/home"> <span class="icon-home"></span> Home</a>
+                            <a href="http://localhost:8000/aboutUs"> About us</a>
+							<a href="http://localhost:8000/registerServiceDetails"><span class="icon-edit"></span> Service Registration </a>
+							<a href="http://localhost:8000/contact"><span class="icon-envelope"></span> Contact us</a>
+							<a href="{% url 'viewcart' %}"><span class="icon-shopping-cart"></span> {{cartlength}} Item(s) - <span class="badge badge-warning">{{tot}} @ &#8377;</span></a>
 						</div>
 					</div>
 				</div>
@@ -93,8 +151,7 @@
 						</div>
 						<div class="span4 alignR">
 							<p><br> <strong id="textColor"> Support (24/7) :  0000 1234 000 </strong><br><br></p>
-							<span class="btn btn-mini">[ 0 ] <span class="icon-shopping-cart"></span></span>
-							<span class="btn btn-warning btn-mini">&#8377;</span>
+			
 						</div>
 					</div>
 				</header>
@@ -122,11 +179,22 @@
 						<form action={% url 'getallprofile' %} class="navbar-search pull-left" method="post">
 							{% csrf_token %}
 						  <input type="text" name="searchText" placeholder="Search" class="search-query span1" >
+						  <span class="icon-search"></span>
 						</form>
+						<ul class="nav"><li><a href="http://localhost:8000/account" class="nav-collapse"> My Account</a></li></ul>
 						
 						<ul class="nav pull-right">
 							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
+								 {% if isLoggedIn %}
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Hi {{ username }} <b class="caret"></b></a>
+                                    <div class="dropdown-menu">
+                                        <form action = "" class="form-horizontal loginFrm" method = "post">
+                                        {% csrf_token %}
+                                            <a data-toggle="dropdown" class="dropdown-toggle" href="#" type="submit" style="font-size:16px; padding:35px 35px;">Logout</a>
+                                        </form>
+                                    </div>
+                                {% else %}
+								    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
 								<div class="dropdown-menu">
 									<form action = "{% url 'signin' %}" class="form-horizontal loginFrm" method = "get">
 {#                    <form action = "" class="form-horizontal loginFrm" method = "get">#}
@@ -158,6 +226,7 @@
                     </form>
 
 								</div>
+								{% endif %}
 							</li>
 						</ul>
 					  </div>
@@ -177,10 +246,73 @@
 						</div>
 						<div class="well well-small">
 						Search:
-							<li><a href="/getprofileonprice"><span class="icon-chevron-right"></span>Price</a></li>
+							<li><span class="icon-chevron-right"></span>Price</li>
+							<div>
+                                    <a href="/getprofileonprice?max=1000&min=0">Under &#8377;1000</a><br>
+                                    <a href="/getprofileonprice?max=2000&min=1000">&#8377;1000 to &#8377;2000</a><br>
+                                    <a href="/getprofileonprice?max=5000&min=2000">&#8377;2000 to &#8377;5000</a><br>
+                                    <a href="/getprofileonprice?max=10000&min=5000">&#8377;5000 to &#8377;10000</a><br>
+                                    <a href="/getprofileonprice?max=999999&min=10000">&#8377;10000 & Above</a><br>
+                                    <form action = " {% url 'getprofileonprice'%}" class="form-horizontal" name="searchByPrice" method = "post">
+                                    {% csrf_token %}
+                                        <div>
+                                            <input type="text" style="width: 50px" id="minPrice" placeholder="&#8377;min" name = "minPrice">
+                                            <input type="text" style="width: 50px" id="maxPrice" placeholder="&#8377;max" name = "maxPrice">
+                                            <button type="submit">Go</button>
+                                        </div>
+                                    </form>
+                                </div>
 							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>Rating</a></li>
+							<div>
+                            <a href="/getprofileonrating?min_rating=4&max_rating=5"><span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                           	<span class="star-icon full">☆</span>
+                       		<span class="star-icon full">☆</span>
+                     		<span class="star-icon">☆</span>& Up</a>
+                            </div>
+                            <div>
+                            <a href="/getprofileonrating?min_rating=3&max_rating=4"><span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>& Up</a>
+                            </div>
+                            <div>
+                            <a href="/getprofileonrating?min_rating=2&max_rating=3"><span class="star-icon full">☆</span>
+                            <span class="star-icon full">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>& Up</a>
+                            </div>
+                            <div>
+                            <a href="/getprofileonrating?min_rating=1&max_rating=2"><span class="star-icon full">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>
+                            <span class="star-icon">☆</span>& Up</a>
+                            </div><br>
 							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>State</a></li>
-							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>City</a></li>
+							<form action = "" class="form-horizontal" name="searchByState" method = "post">
+                                {% csrf_token %}
+                               <select name="stateName" style="margin: 5px;width: 120px;">
+                                    <option value="" >Select </option>
+                                    {% for sname in stateNames %}
+                                        <option value="{{ sname.city_state }}"> {{ sname.city_state }} </option>
+                                    {% endfor %}
+							    </select>
+                                <input type="submit" value="Go"></input><br><br>
+                             </form>
+                             <li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>City</a></li>
+                              <form action = "" class="form-horizontal" name="searchByCity" method = "post">
+                                {% csrf_token %}
+                                <select name="cityName" style="margin: 5px;width: 120px;">
+                                    <option value="" >Select </option>
+                                    {% for cname in cityNames %}
+                                        <option value="{{ cname.city_name }}"> {{ cname.city_name }} </option>
+                                    {% endfor %}
+							    </select>
+                                <input type="submit" value="Go"></input>
+                            </form>
 						</div>
 						<div class="well well-small alert alert-warning cntr">
 								  <h2>50% Discount</h2>

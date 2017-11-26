@@ -67,11 +67,13 @@
         <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart
         </button>
     </form>
+    
 	</div>
 	<ul id="productDetail" class="nav nav-tabs">
               <li class="active"><a href="#description" data-toggle="tab">Product Description</a></li>
               <li class=""><a href="#product" data-toggle="tab">About the Product </a></li>
 			  <li class=""><a href="#us" data-toggle="tab">About Us </a></li>
+			  <li class=""><a href="#feedback" data-toggle="tab">Feedback </a></li>
             </ul>
             <div id="myTabContent" class="tab-content tabWrapper">
             <div class="tab-pane fade active in" id="description">
@@ -87,6 +89,12 @@
 			<p>
                         {{ profileDetails.aboutus }}
 			 </p>
+			</div>
+			<div class="tab-pane fade" id="feedback">
+				{% for feedback in feedbacks %}
+    				 <p> * {{feedback.description}} </p>
+				{% endfor %}
+				<a href={% url 'redirectrating' product_id=profile.profile_id %}> Add feedback </a>
 			</div>
 		</div>
 	

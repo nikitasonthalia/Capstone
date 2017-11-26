@@ -18,6 +18,8 @@ from django.core.files.storage import FileSystemStorage
 #Import Folder model
 #from filer.models.foldermodels import Folder
 from EventHubApp.search.models import User, UserProfile, Category
+from django.contrib.auth.models import User as DUser
+from django.contrib.auth import authenticate
 
 categoryName = Category.objects.order_by("category_name")[:12]
 
@@ -166,13 +168,17 @@ def signin(request):
     # return HttpResponse(message)
     #result = User.objects.filter(username=name).exists()
     #return HttpResponse(result)
-    user = User.objects.get(username=name, password = pwd);
-    if user:
-        request.session["userid"] = user.user_id
-        template = loader.get_template('home.html')
-        return render(request, 'home.html', {'categoryName': categoryName})
-    else:
+    try:
+        duser = authenticate(username=name, password=pwd)
+        print(duser)
+        user = User.objects.get(username=name, password = pwd)
+    except User.DoesNotExist:
         return render(request,'nologinsuccess.html')
+    else:
+        request.session["userid"] = user.user_id
+        #template = loader.get_template('home.html')
+        return render(request, 'home.html', {'categoryName': categoryName})
+       
 
 def signup(request):
     template = loader.get_template('signup.html')
@@ -193,10 +199,11 @@ def signupSubmit(request):
     country = request.GET['country']
     pin_number = request.GET['pin_number']
     phone = request.GET['phone']
-
+    user = DUser.objects.create_user(firstname, username, passwd)
+    user.save()
     userProfile =  User(first_name = firstname, last_name = lastname, email = email, username = username, password = passwd,
                         street1 = street1, street2 = street2, city = city, state = state, country = country, phone = phone)
-    userProfile.user_type_id_id = 1
+#     userProfile.user_type_id_id = 1
     userProfile.save()
     return render(request, 'home.html')
 

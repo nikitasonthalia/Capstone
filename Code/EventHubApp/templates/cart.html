@@ -43,14 +43,14 @@
             <th>Product</th>
             <th>Unit Price</th>
             <th>Quantity</th>
-            <th>Total</th>
+            <th>Total {{ tot }}</th>
             <th>Remove</th>
         </tr>
         </thead>
         <tbody class="bgcolor2">
-        {% for item in cart %}
+        {% for item in cart.cart %}
         <tr>
-            <td>{{ item.product.profile_name }}</td>
+           	<td><a href="/getdetail?profile_id={{item.product.profile_id}}" class="overlay">{{ item.product.profile_name }}</td></a>
             <td>{{ item.total_price }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.total_price }}</td>

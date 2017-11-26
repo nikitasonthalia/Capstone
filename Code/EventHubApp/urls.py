@@ -30,7 +30,7 @@ admin.autodiscover()
 
 urlpatterns = [
 #     url(r'/', core_views.getData, name='getData'),
-    url(r'^admin/', admin.site.urls),
+#     url(r'^admin/', admin.site.urls),
     url(r'^test/$', core_views.test, name='test'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
@@ -41,15 +41,12 @@ urlpatterns = [
     url(r'getprofile/$', search_views.getprofile, name='getprofile'),
     url(r'getdetail/$', search_views.getdetail, name='getdetail'),
     url(r'addtocart/(?P<product_id>[0-9]+)$', search_views.add_to_cart, name='addtocart'),
+    url(r'viewcart/$', search_views.get_cart, name='viewcart'),
     url(r'deletefromcart/(?P<product_id>[0-9]+)$', search_views.remove_from_cart, name='deletefromcart'),
     url(r'getallprofile/$', search_views.getallprofile, name='getallprofile'),
     url(r'getprofileonprice/$', search_views.getprofileonprice, name='getprofileonprice'),
+    url(r'getprofileonrating/$', search_views.getprofileonrating, name='getprofileonrating'),
     url(r'rating/$', auth_views.login, {'template_name': 'rating.html'}, name='rating'),
-    #url(r'register/$', event_views.register, name='register'),
-    #url(r'getForm/$', event_views.getForm, name='getForm'),
-    #url(r'registerServiceDetails/$', event_views.registerServiceDetails, name='registerServiceDetails'),
-    #url(r'getServiceDetails/$', event_views.getServiceDetails, name='getServiceDetails'),
-    #url(r'saveUserProfile/$', event_views.saveUserProfile, name='saveUserProfile'),
     url(r'registerServiceDetails/$', registration_views.registerServiceDetails, name='registerServiceDetails'),
     url(r'saveUserProfile/$', registration_views.saveUserProfile, name='saveUserProfile'),
     url(r'contact/$', event_views.contact, name='contact'),
@@ -59,5 +56,8 @@ urlpatterns = [
     url(r'^signup/$', event_views.signup, name='signup'),
     url(r'^signin/$', event_views.signin, name='signin'),
     url(r'^signupSubmit/$', event_views.signupSubmit, name='signupSubmit'),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
+    url(r'^saverating/(?P<product_id>[0-9]+)$', search_views.saverating, name='saverating'),
+    url(r'^redirectrating/(?P<product_id>[0-9]+)$', search_views.redirectrating, name='redirectrating'),
 ]
 

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cart',
     'EventHubApp.registration',
     'phonenumber_field',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
