@@ -3,7 +3,6 @@ from EventHubApp.search.models import UserProfile
 
 # Create your models here.
 class Userprofiledetails(models.Model):
-    servicename = models.CharField(db_column='serviceName', max_length=50)  # Field name made lowercase.
     type = models.CharField(max_length=50)
     offers = models.CharField(max_length=50)
     package = models.CharField(max_length=50)
@@ -15,4 +14,10 @@ class Userprofiledetails(models.Model):
 
     class Meta:
         managed = False
+        #db_table = 'registration_userprofiledetails'
         db_table = 'userprofiledetails'
+
+class States(models.Model):
+    cityNum = models.IntegerField(blank=True, null=True)
+    city_name = models.CharField(max_length=50)
+    city_state = models.CharField(max_length=50, blank=True, null=True)

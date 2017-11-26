@@ -25,14 +25,70 @@
 			        var res = myStr.split(";");
 			        var selectElement = document.getElementById(myOptions);
 			        for (var i = 0; i < res.length; i++) {
-			
+
 			            var option = document.createElement("option");
 			            option.text = res[i];
 			            option.value = res[i];
 			            selectElement.add(option);
-			
+
 			        }
 			    }
+	            function sortProfilebyPrice(profiles){
+                    jsonProfilesList=JSON.parse(profiles);
+                    var profileList = [];
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
+                        profileList.push(jsonProfilesList[counter]);
+                    }
+                    profileList.sort(
+                        function (p1,p2) {
+                            return p1.fields.price-p2.fields.price;
+                        }
+                    );
+                    renderProfiles(profileList);
+                }
+
+                function sortProfilebyName(profiles){
+                    jsonProfilesList=JSON.parse(profiles);
+                    var profileList = [];
+                    for (var counter=0; counter<jsonProfilesList.length;counter++) {
+                        profileList.push(jsonProfilesList[counter]);
+                    }
+                    profileList.sort(
+                        function (p1,p2) {
+                            return p1.fields.profile_name.localeCompare(p2.fields.profile_name);
+                        }
+                    );
+                    renderProfiles(profileList);
+                }
+
+		function renderProfiles(profileList) {
+			var mainDiv = document.getElementById("listservicecontent");
+			mainDiv.innerHTML = "";
+
+			mainDiv.class='row-fluid';
+			var content = '<ul class="thumbnails">';
+			for (var i = 0; i < profileList.length; i++) {
+			    content += '<li class="span4">'
+					content += '<div class="thumbnail">'
+						content += '<a href="/getdetail?profile_id='+profileList[i].pk+'" class="overlay"></a>'
+						content += '<a class="zoomTool" href="/getdetail?profile_id='+profileList[i].pk+'" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>'
+						content += '<a href="/getdetail?profile_id='+profileList[i].pk+'"><img src="/static/images/'+profileList[i].fields.pic1+'" alt=""></a>'
+						content += '<div class="caption cntr">'
+							content += '<p>'+profileList[i].fields.profile_name+'</p>'
+							content += '<p>'+profileList[i].fields.price+'</p>'
+							content += '<!-- <h4><a class="shopBtn" href="#" title="add to cart"> View </a></h4> -->'
+							content += '<div class="actionList">'
+								content += '<a class="pull-left" href="#">Counter: </a>'
+								content += '<a class="pull-left" href="#">Rating:  </a>'
+							content += '</div>'
+							content += '<br class="clr">'
+						content += '</div>'
+					content += '</div>'
+				content += '</li>'
+            }
+			content += '</ul>';
+			mainDiv.innerHTML = content;
+        }
 
 			</script>
     <!--[if IE 7]>
@@ -46,7 +102,6 @@
 		  <!-- Placed at the end of the document so the pages load faster -->
 	  </head>
 	  <body>
-	
 			<!--
 				Upper Header Section
 			-->
@@ -60,11 +115,11 @@
 								<a href="#"><span class="icon-youtube"></span></a>
 								<a href="#"><span class="icon-tumblr"></span></a>
 							</div>
-							<a class="active" href="index.html"> <span class="icon-home"></span> Home</a>
-							<a href="#"><span class="icon-user"></span> My Account</a>
-							<a href="register.html"><span class="icon-edit"></span> Register </a>
-							<a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
-							<a href="cart.html"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> @ &#8377;0.0</span></a>
+							<a class="active" href="http://localhost:8000/home"> <span class="icon-home"></span> Home</a>
+                            <a href="http://localhost:8000/aboutUs"> About us</a>
+							<a href="http://localhost:8000/registerServiceDetails"><span class="icon-edit"></span> Service Registration </a>
+							<a href="http://localhost:8000/contact"><span class="icon-envelope"></span> Contact us</a>
+							<a href="http://localhost:8000/cart"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> @ &#8377;0.0</span></a>
 						</div>
 					</div>
 				</div>
@@ -78,7 +133,7 @@
 					<div class="row">
 						<div class="span4">
 							<h1>
-							<a class="logo" href="index.html"><span>EventHub</span>
+							<a class="logo" href="http://localhost:8000/home"><span>EventHamper</span>
 								<img src="{% static "events/assets/img/logo.png" %}" alt="EventHub Logo">
 							</a>
 							</h1>
@@ -122,14 +177,26 @@
 						<form action={% url 'getallprofile' %} class="navbar-search pull-left" method="post">
 							{% csrf_token %}
 						  <input type="text" name="searchText" placeholder="Search" class="search-query span1" >
+                          <span class="icon-search"></span>
 						</form>
-						
+						  <ul class="nav"><li><a href="http://localhost:8000/account" class="nav-collapse"> My Account</a></li></ul>
+
+
 						<ul class="nav pull-right">
 							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
-								<div class="dropdown-menu">
+                                {% if isLoggedIn %}
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Hi {{ username }} <b class="caret"></b></a>
+                                    <div class="dropdown-menu">
+                                        <form action = "" class="form-horizontal loginFrm" method = "post">
+                                        {% csrf_token %}
+                                            <a data-toggle="dropdown" class="dropdown-toggle" href="#" type="submit" style="font-size:16px; padding:35px 35px;">Logout</a>
+                                        </form>
+                                    </div>
+                                {% else %}
+								    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> Login <b class="caret"></b></a>
+                                <div class="dropdown-menu">
 									<form action = "{% url 'signin' %}" class="form-horizontal loginFrm" method = "get">
-{#                    <form action = "" class="form-horizontal loginFrm" method = "get">#}
+                    <!--<form action = "" class="form-horizontal loginFrm" method = "get">-->
 
                     {% csrf_token %}
                     {{ form.as_p }}
@@ -158,6 +225,8 @@
                     </form>
 
 								</div>
+                                {% endif %}
+
 							</li>
 						</ul>
 					  </div>
@@ -178,9 +247,70 @@
 						<div class="well well-small">
 						Search:
 							<li><a href="/getprofileonprice"><span class="icon-chevron-right"></span>Price</a></li>
+                                <div>
+                                    <a href="#">Under &#8377;1000</a><br>
+                                    <a href="#">&#8377;1000 to &#8377;2000</a><br>
+                                    <a href="#">&#8377;2000 to &#8377;5000</a><br>
+                                    <a href="#">&#8377;5000 to &#8377;10000</a><br>
+                                    <a href="#">&#8377;10000 & Above</a><br>
+                                    <form action = "" class="form-horizontal" name="searchByPrice" method = "post">
+                                    {% csrf_token %}
+                                        <div>
+                                            <input type="text" style="width: 50px" id="minPrice" placeholder="&#8377;min" name = "minPrice">
+                                            <input type="text" style="width: 50px" id="maxPrice" placeholder="&#8377;max" name = "maxPrice">
+                                            <button type="submit">Go</button>
+                                        </div>
+                                    </form>
+                                </div>
 							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>Rating</a></li>
+                            <div>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>& Up
+                            </div>
+                            <div>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>& Up
+                            </div>
+                            <div>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>& Up
+                            </div>
+                            <div>
+                            <a href="#"><span class="star-icon full">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>
+                            <a href="#"><span class="star-icon">☆</span></a>& Up
+                            </div><br>
 							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>State</a></li>
-							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>City</a></li>
+                            <form action = "" class="form-horizontal" name="searchByLocation" method = "post">
+                                {% csrf_token %}
+                               <select name="stateName" style="margin: 5px;width: 120px;">
+                                    <option value="" >Select </option>
+                                    {% for sname in stateNames %}
+                                        <option value="{{ sname.city_state }}"> {{ sname.city_state }} </option>
+                                    {% endfor %}
+							    </select>
+                                <input type="submit" value="Go"></input><br><br>
+                                <li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>City</a></li>
+                                <select name="cityName" style="margin: 5px;width: 120px;">
+                                    <option value="" >Select </option>
+                                    {% for cname in cityNames %}
+                                        <option value="{{ cname.city_name }}"> {{ cname.city_name }} </option>
+                                    {% endfor %}
+							    </select>
+                                <input type="submit" value="Go"></input>
+                            </form>
+
 						</div>
 						<div class="well well-small alert alert-warning cntr">
 								  <h2>50% Discount</h2>
