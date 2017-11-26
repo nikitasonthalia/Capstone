@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% static '' as baseUrl %}
 {% block content %}
     <ul class="breadcrumb">
         <li><a href="index.html">Home</a> <span class="divider">/</span></li>
@@ -14,7 +16,6 @@
             }
 
             function validateForm(form) {
-                //alert("Please read FAQs carefully");
                 var vCategory = document.serviceDetailsForm.category.value;
                 if (vCategory == 'Other') {
                     var vNewCategory = document.serviceDetailsForm.newCategory.value;
@@ -51,7 +52,6 @@
                         return false;
                     }
                 }
-                alert("Hi");
                 //if form is validated successfully clear the form upon submission
                 //clearForm.reset();
                 return true;

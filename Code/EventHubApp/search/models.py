@@ -217,7 +217,7 @@ class User(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
-    pin_number = models.IntegerField
+    pin_number = models.IntegerField()
     phone = PhoneNumberField(blank=True, null=True)
 
     class Meta:

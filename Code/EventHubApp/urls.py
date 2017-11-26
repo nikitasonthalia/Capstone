@@ -36,8 +36,8 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^getdata/$', core_views.getData, name='getData'),
     url(r'^home/$', core_views.home, name='home'),
-    url(r'florist/$', event_views.florist, name='florist'),
-    url(r'florist1/$', event_views.florist1, name='florist1'),
+    #url(r'florist/$', event_views.florist, name='florist'),
+    #url(r'florist1/$', event_views.florist1, name='florist1'),
     url(r'getprofile/$', search_views.getprofile, name='getprofile'),
     url(r'getdetail/$', search_views.getdetail, name='getdetail'),
     url(r'addtocart/(?P<product_id>[0-9]+)$', search_views.add_to_cart, name='addtocart'),
@@ -59,5 +59,9 @@ urlpatterns = [
     url(r'^signup/$', event_views.signup, name='signup'),
     url(r'^signin/$', event_views.signin, name='signin'),
     url(r'^signupSubmit/$', event_views.signupSubmit, name='signupSubmit'),
+    url(r'^account/$', event_views.account, name='account'),
+    url(r'^modifyServiceUserProfile/$', event_views.modifyServiceUserProfile, name='modifyServiceUserProfile'),
+    url(r'^updateUserProfileDetails/$', event_views.updateUserProfileDetails, name='updateUserProfileDetails'),
+    url(r'^modifyRegularUserProfile/$', event_views.modifyRegularUserProfile, name='modifyRegularUserProfile'),
 ]
 

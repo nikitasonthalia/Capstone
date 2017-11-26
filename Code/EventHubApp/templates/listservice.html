@@ -2,24 +2,32 @@
 {% load static %}
 {% static '' as baseUrl %}
 {% block content %}
-
 <div class="well well-small">
 	<h3>Our {{ category.category_name }}  </h3>
-	<div class="row-fluid">
+	<!--{% if category.category_name == "Services" %}
+		<a href="/sortProfile?sort_by=price&category_id=F">Sort by Price</a>
+		<a href="/sortProfile?sort_by=profile_name&category_id=F">Sort by Name</a>
+	{% else %}
+		<a href="/sortProfile?category_id={{category.category_id}}&sort_by=price">Sort by Price</a>
+		<a href="/sortProfile?category_id={{category.category_id}}&sort_by=profile_name">Sort by Name</a>
+	{% endif %}-->
+	<a href="javascript:sortProfilebyPrice({{profileJsons}})">Sort by price</a>
+	<a href="javascript:sortProfilebyName({{profileJsons}})">Sort by Name</a>
+	<div id="listservicecontent" class="row-fluid">
 		<ul class="thumbnails">
 			{% for profile in profiles %}
 				<li class="span4">
 					<div class="thumbnail">
 						<a href="/getdetail?profile_id={{profile.profile_id}}" class="overlay"></a>
 						<a class="zoomTool" href="/getdetail?profile_id={{profile.profile_id}}" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-						<a href=""><img src="/static/images/{{profile.pic1}}" alt=""></a>
+						<a href="/getdetail?profile_id={{profile.profile_id}}"><img src="/static/images/{{profile.pic1}}" alt=""></a>
 						<div class="caption cntr">
 							<p>{{profile.profile_name}}</p>
 							<p>{{profile.price}}</p>
 							<!-- <h4><a class="shopBtn" href="#" title="add to cart"> View </a></h4> -->
 							<div class="actionList">
-								<a class="pull-left" href="#">Add to Wish List </a> 
-								<a class="pull-left" href="#"> Add to Compare </a>
+								<a class="pull-left" href="#">Counter: </a>
+								<a class="pull-left" href="#">Rating:  </a>
 							</div> 
 							<br class="clr">
 						</div>

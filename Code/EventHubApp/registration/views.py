@@ -19,27 +19,22 @@ categoryName = Category.objects.order_by("category_name")
 
 # Displays registerServiceDetails.html
 def registerServiceDetails(request):
+    list1 = Category.objects.all()
+    stateNames = States.objects.order_by().values('city_state').distinct()
+    cityNames = States.objects.order_by().values('city_name').distinct()
+    if 'userid' in request.session:
+        userid = request.session.get('userid')
+    else:
+        userid = 0
+        return render(request, 'home.html', {'list1': list1, 'loginRequired': True})
     userCategories = Category.objects.exclude(
-        category_id__in=UserProfile.objects.filter(user_id=1).values_list('category_id', flat=True))
+        category_id__in=UserProfile.objects.filter(user_id=userid).values_list('category_id', flat=True))
     template = loader.get_template('registerServiceDetails.html')
     context = {
 
     }
-    return render(request, 'registerServiceDetails.html', {'userCategories': userCategories, 'categoryName': categoryName})
+    return render(request, 'registerServiceDetails.html', {'userCategories': userCategories, 'list1': list1, 'stateNames': stateNames, 'cityNames':cityNames})
 
-"""def registerServiceDetails(request):
-    if request.user.is_authenticated():
-        userCategories = Category.objects.exclude(
-            category_id__in=UserProfile.objects.filter(user_id=1).values_list('category_id', flat=True))
-        template = loader.get_template('registerServiceDetails.html')
-        context = {
-
-        }
-        return render(request, 'registerServiceDetails.html',
-                      {'userCategories': userCategories, 'categoryName': categoryName})
-    else:
-        messages.warning(request, 'Please correct the error below.')
-        return render(request, "registerServiceDetails.html")"""
 
 
 # Create your views here.
@@ -52,6 +47,10 @@ def saveCategory(newCat):
 
 
 def saveUserProfile(request):
+    list1 = Category.objects.all()
+    stateNames = States.objects.order_by().values('city_state').distinct()
+    cityNames = States.objects.order_by().values('city_name').distinct()
+
     if 'userid' in request.session:
         userid = request.session.get('userid')
     else:
@@ -126,11 +125,10 @@ def saveUserProfile(request):
     SPDetails.type = request.POST.get('stype')
     SPDetails.offers = request.POST.get('soffer')
     SPDetails.package = request.POST.get('spackage')
-    SPDetails.serviceDetails = request.POST.get('sdetails')
-    SPDetails.productDescription = request.POST.get('sdesc')
-    SPDetails.aboutProduct = request.POST.get('sprod')
-    SPDetails.aboutUs = request.POST.get('sabout')
+    SPDetails.servicedetails = request.POST.get('sdetails')
+    SPDetails.productdescription = request.POST.get('sdesc')
+    SPDetails.aboutproduct = request.POST.get('sprod')
+    SPDetails.aboutus = request.POST.get('sabout')
     SPDetails.save()
 
-    return render(request, 'home.html', {'categoryName': categoryName})
-
+    return render(request, 'home.html', {'list1': list1, 'stateNames': stateNames, 'cityNames':cityNames})
