@@ -59,9 +59,9 @@ urlpatterns = [
     url(r'^signup/$', event_views.signup, name='signup'),
     url(r'^signin/$', event_views.signin, name='signin'),
     url(r'^signupSubmit/$', event_views.signupSubmit, name='signupSubmit'),
-    url(r'^account/$', event_views.account, name='account'),
-    url(r'^modifyServiceUserProfile/$', event_views.modifyServiceUserProfile, name='modifyServiceUserProfile'),
-    url(r'^updateUserProfileDetails/$', event_views.updateUserProfileDetails, name='updateUserProfileDetails'),
-    url(r'^modifyRegularUserProfile/$', event_views.modifyRegularUserProfile, name='modifyRegularUserProfile'),
+    url(r'^account/$', registration_views.account, name='account'),
+    url(r'^modifyServiceUserProfile/$', registration_views.modifyServiceUserProfile, name='modifyServiceUserProfile'),
+    url(r'^updateUserProfileDetails/$', registration_views.updateUserProfileDetails, name='updateUserProfileDetails'),
+    url(r'^modifyRegularUserProfile/$', registration_views.modifyRegularUserProfile, name='modifyRegularUserProfile'),
 ]
 

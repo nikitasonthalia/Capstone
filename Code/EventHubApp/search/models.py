@@ -243,6 +243,7 @@ class UserProfile(models.Model):
     pic4 = models.ImageField(blank=True, null=True)
     pic5 = models.ImageField(blank=True, null=True)
     price = models.FloatField()
+    active = models.BooleanField(default=True)
 
     class Meta:
         managed = False
