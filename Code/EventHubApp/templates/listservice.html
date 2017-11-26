@@ -3,16 +3,10 @@
 {% static '' as baseUrl %}
 {% block content %}
 <div class="well well-small">
-	<h3>Our {{ category.category_name }}  </h3>
-	<!--{% if category.category_name == "Services" %}
-		<a href="/sortProfile?sort_by=price&category_id=F">Sort by Price</a>
-		<a href="/sortProfile?sort_by=profile_name&category_id=F">Sort by Name</a>
-	{% else %}
-		<a href="/sortProfile?category_id={{category.category_id}}&sort_by=price">Sort by Price</a>
-		<a href="/sortProfile?category_id={{category.category_id}}&sort_by=profile_name">Sort by Name</a>
-	{% endif %}-->
-	<a href="javascript:sortProfilebyPrice({{profileJsons}})">Sort by price</a>
-	<a href="javascript:sortProfilebyName({{profileJsons}})">Sort by Name</a>
+	<h3>Our {{ category.category_name }}
+	<a style="font-size:10pt;float: right" href="javascript:sortProfilebyPrice({{profileJsons}})">Sort by price</a>
+	<a style="font-size:10pt;float: right" href="javascript:sortProfilebyName({{profileJsons}})">Sort by Name</a>
+	</h3>
 	<div id="listservicecontent" class="row-fluid">
 		<ul class="thumbnails">
 			{% for profile in profiles %}
