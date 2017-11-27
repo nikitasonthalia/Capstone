@@ -29,7 +29,7 @@ admin.autodiscover()
 
 
 urlpatterns = [
-#     url(r'/', core_views.getData, name='getData'),
+#     url(r'/', core_views.home, name='home'),
 #     url(r'^admin/', admin.site.urls),
     url(r'^test/$', core_views.test, name='test'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
@@ -46,6 +46,8 @@ urlpatterns = [
     url(r'getallprofile/$', search_views.getallprofile, name='getallprofile'),
     url(r'getprofileonprice/$', search_views.getprofileonprice, name='getprofileonprice'),
     url(r'getprofileonrating/$', search_views.getprofileonrating, name='getprofileonrating'),
+    url(r'getprofileonstate/$', search_views.getprofileonstate, name='getprofileonstate'),
+    url(r'getprofileonicity/$', search_views.getprofileonicity, name='getprofileonicity'),
     url(r'rating/$', auth_views.login, {'template_name': 'rating.html'}, name='rating'),
     url(r'registerServiceDetails/$', registration_views.registerServiceDetails, name='registerServiceDetails'),
     url(r'saveUserProfile/$', registration_views.saveUserProfile, name='saveUserProfile'),
@@ -63,5 +65,7 @@ urlpatterns = [
     url(r'^modifyServiceUserProfile/$', registration_views.modifyServiceUserProfile, name='modifyServiceUserProfile'),
     url(r'^updateUserProfileDetails/$', registration_views.updateUserProfileDetails, name='updateUserProfileDetails'),
     url(r'^modifyRegularUserProfile/$', registration_views.modifyRegularUserProfile, name='modifyRegularUserProfile'),
+    url(r'^forgotPass', event_views.forgotPass, name='forgotPass'),
+    url(r'^sendEmail', event_views.sendEmail, name='sendEmail'),
 ]
 

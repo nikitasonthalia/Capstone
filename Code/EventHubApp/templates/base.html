@@ -94,6 +94,29 @@
         }
 
 			</script>
+		<style type="text/css">
+		.star-icon {
+    color: #ddd;
+    font-size: 18px;
+    position: relative;
+}
+.star-icon.full:before {
+    color: #FDE16D;
+    content: '\2605'; /* Full star in UTF8 */
+    position: absolute;
+    left: 0;
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+ }
+.star-icon.half:before {
+    color: #FDE16D;
+    content: '\2605'; /* Full star in UTF8 */
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+}
+		</style>
     <!--[if IE 7]>
 				<link href="css/font-awesome-ie7.min.css" rel="stylesheet">
 			<![endif]-->
@@ -213,9 +236,10 @@
                <button type="submit" class="shopBtn btn-block">Sign in</button>
               </div>
             </form>
-                    <div class="control-group">
-                        <a href="forgotPass.html" class="form-horizontal loginFrm" >Forgot Password?</a>
-                    </div>
+            <div class="control-group">
+   				<a href="{% url "forgotPass" %}" class="form-horizontal loginFrm" >Forgot Password?</a>
+			</div>
+       
                     <form  action = "{% url 'signup' %}" class="form-horizontal loginFrm" method="get">
                         {% csrf_token %}
                         <div class="control-group">
@@ -263,7 +287,7 @@
                                         </div>
                                     </form>
                                 </div>
-							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>Rating</a></li>
+							<li><span class="icon-chevron-right"></span>Rating</li>
 							<div>
                             <a href="/getprofileonrating?min_rating=4&max_rating=5"><span class="star-icon full">☆</span>
                             <span class="star-icon full">☆</span>
@@ -292,24 +316,24 @@
                             <span class="star-icon">☆</span>
                             <span class="star-icon">☆</span>& Up</a>
                             </div><br>
-							<li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>State</a></li>
-							<form action = "" class="form-horizontal" name="searchByState" method = "post">
+							<li><span class="icon-chevron-right"></span>State</li>
+							<form action = " {% url 'getprofileonstate'%}" class="form-horizontal" name="searchByState" method = "post">
                                 {% csrf_token %}
                                <select name="stateName" style="margin: 5px;width: 120px;">
                                     <option value="" >Select </option>
-                                    {% for sname in stateNames %}
-                                        <option value="{{ sname.city_state }}"> {{ sname.city_state }} </option>
+                                    {% for sname in states %}
+                                        <option value="{{ sname }}"> {{ sname }} </option>
                                     {% endfor %}
 							    </select>
                                 <input type="submit" value="Go"></input><br><br>
                              </form>
-                             <li><a href="/getprofile?category_id={{ list.category_id }}"><span class="icon-chevron-right"></span>City</a></li>
-                              <form action = "" class="form-horizontal" name="searchByCity" method = "post">
+                             <li><span class="icon-chevron-right"></span>City</li>
+                              <form action = "{% url 'getprofileonicity'%}" class="form-horizontal" name="searchByCity" method = "post">
                                 {% csrf_token %}
                                 <select name="cityName" style="margin: 5px;width: 120px;">
                                     <option value="" >Select </option>
-                                    {% for cname in cityNames %}
-                                        <option value="{{ cname.city_name }}"> {{ cname.city_name }} </option>
+                                    {% for cname in cities %}
+                                        <option value="{{ cname }}"> {{ cname }} </option>
                                     {% endfor %}
 							    </select>
                                 <input type="submit" value="Go"></input>
@@ -322,10 +346,10 @@
 									 only valid for today's online order. <br><a class="defaultBtn" href="#">Click here </a>
 								  </p>
 						</div>
-						<div class="well well-small" ><a href="#"><img src="{% static "events/assets/img/paypal.jpg" %}" alt="payment method paypal"></a></div>
+						<!-- <div class="well well-small" ><a href="#"><img src="{% static "events/assets/img/paypal.jpg" %}" alt="payment method paypal"></a></div> -->
 
-							<a class="shopBtn btn-block" href="#">Upcoming services <br><small>Click to view</small></a>
-							<br>
+<!-- 							<a class="shopBtn btn-block" href="#">Upcoming services <br><small>Click to view</small></a>
+ -->							<br>
 							<br>
 						</div>
 						<div class="span9">
@@ -348,7 +372,6 @@ Footer
                 <a href="#">PERSONAL INFORMATION</a><br>
                 <a href="#">ADDRESSES</a><br>
                 <a href="#">DISCOUNT</a><br>
-                <a href="#">ORDER HISTORY</a><br>
             </div>
             <div class="span2">
                 <h5>Information</h5>
@@ -358,14 +381,14 @@ Footer
                 <a href="#">TERMS AND CONDITIONS</a><br>
                 <a href="#">ABOUT US</a><br>
             </div>
-            <div class="span2">
+             <!-- <div class="span2">
                 <h5>Our Offer</h5>
                 <a href="#">NEW PRODUCTS</a> <br>
                 <a href="#">TOP SELLERS</a><br>
                 <a href="#">SPECIALS</a><br>
-                <!--<a href="#">MANUFACTURERS</a><br>-->
+                <a href="#">MANUFACTURERS</a><br>
                 <a href="#">SUPPLIERS</a> <br/>
-            </div>
+            </div>  -->
             <div class="span6">
                 <h5>Today's Thought</h5>
                 Focus on the journey, not the destination. Joy is found not in finishing an activity but in doing it.
@@ -376,13 +399,13 @@ Footer
 </div>
 <div class="copyright">
     <div class="container" style="text-align:center; margin-top:5px;">
-        <p class="pull-right">
+        <!-- <p class="pull-right">
             <a href="#"><img src="{% static "events/assets/img/maestro.png" %}" alt="payment"></a>
             <a href="#"><img src="{% static "events/assets/img/mc.png" %}" alt="payment"></a>
             <a href="#"><img src="{% static "events/assets/img/pp.png" %}" alt="payment"></a>
             <a href="#"><img src="{% static "events/assets/img/visa.png" %}" alt="payment"></a>
             <a href="#"><img src="{% static "events/assets/img/disc.png" %}" alt="payment"></a>
-        </p>
+        </p> -->
         <span>Copyright &copy; 12/17/2017 Event Hamper</span>
     </div>
 </div>

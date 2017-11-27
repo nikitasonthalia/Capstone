@@ -22,28 +22,20 @@ def getprofile(request):
     request.session["categoryid"] = category_id
     print('catagory', category_id)
     category = Category.objects.get(category_id=category_id)
-    list1 = Category.objects.all()
     profiles = UserProfile.objects.filter(category_id = category_id )
     print('category',category)
     print('profiles',profiles)
-    cart = Cart(request)
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
-    profiles = UserProfile.objects.filter(category_id=category_id)
+    profiles = UserProfile.objects.filter(category_id=category_id, active=True)
 
     profileJsons=serialize('json', list(profiles))
     profileJsons = json.dumps(profileJsons)
 
     # print('category', category)
     # print('profiles', profiles)
-    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category, 'list1' : list1, 'cartlength': cart.count(), 'tot': cart.summary(),'stateNames': stateNames,
-                   'cityNames': cityNames, 'profileJsons':profileJsons})
+    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category, 'profileJsons':profileJsons})
 
 
 def getallprofile(request):
-    list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     searchText = request.POST.get('searchText')
     print('searchText', searchText)
     categoryids = Category.objects.values_list('category_id', flat=True).filter(
@@ -51,7 +43,7 @@ def getallprofile(request):
     #     filter(category_name__contains=searchText)
     #     .filter(description__contains=searchText)
     print('categoryids', list(categoryids))
-    profiles = UserProfile.objects.filter(
+    profiles = UserProfile.objects.filter(active=True).filter(
         Q(profile_name__contains=searchText) | Q(description__contains=searchText) | Q(category_id__in=categoryids))
     #     filter(profile_name__contains=searchText).filter(description__contains=searchText).filter(category_id__in=categoryids)
     print('profiles', profiles)
@@ -60,8 +52,7 @@ def getallprofile(request):
     }
     profileJsons = serialize('json', list(profiles))
     profileJsons = json.dumps(profileJsons)
-    cart = Cart(request)
-    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category, 'list1' : list1, 'cartlength': cart.count(), 'tot': cart.summary(), 'cityNames': cityNames, 'profileJsons':profileJsons })
+    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category})
 
 
 
@@ -71,20 +62,15 @@ def getdetail(request):
     #     category = Category.objects.get(category_id = category_id)
     profile = UserProfile.objects.get(profile_id=profile_id)
     profile_detail = Userprofiledetails.objects.get(profile_id=profile_id)
-    list1 = Category.objects.all()
-<<<<<<< HEAD
     print('profile_detail',profile_detail.type)
     print('profile',profile)
     range1 = range(1,6)
-    cart = Cart(request)
     feedback = Rating.objects.filter(profile = profile_id)
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     print('profile_detail', profile_detail.type)
     print('profile', profile)
     # range1 = range(1,6)
     range1 = (profile.pic1, profile.pic2, profile.pic3, profile.pic4, profile.pic5)
-    return render(request, 'viewdetail.html', {'range' : range1 , 'profile' : profile, 'profileDetails':profile_detail, 'list1':list1, 'cartlength': cart.count(), 'tot': cart.summary(),'feedbacks':feedback, 'stateNames': stateNames, 'cityNames': cityNames })
+    return render(request, 'viewdetail.html', {'range' : range1 , 'profile' : profile, 'profileDetails':profile_detail,'feedbacks':feedback })
 
 
 def add_to_cart(request, product_id, quantity=1):
@@ -94,31 +80,27 @@ def add_to_cart(request, product_id, quantity=1):
     cart = Cart(request)
     cart.add(product, product.price, quantity)
     cart = Cart(request)
-    list1 = Category.objects.all()
-    return render(request, 'cart.html', {'cart': dict(cart=Cart(request)),'list1':list1, 'cartlength': cart.count(), 'tot': cart.summary() })
+    return render(request, 'cart.html', {'cart': dict(cart=Cart(request)), 'cartlength': cart.count(), 'tot': cart.summary() })
 
 
 def remove_from_cart(request, product_id):
     product = UserProfile.objects.get(profile_id=product_id)
     cart = Cart(request)
     cart.remove(product)
-    list1 = Category.objects.all()
-    return render(request, 'cart.html', {'cart': dict(cart=Cart(request)),'list1':list1, 'cartlength': cart.count(), 'tot': cart.summary() })
+    return render(request, 'cart.html', {'cart': dict(cart=Cart(request)),'cartlength': cart.count(), 'tot': cart.summary() })
 
 
 def get_cart(request):
 
     print('here')
     cart = Cart(request)
-    list1 = Category.objects.all()
-    return render(request,'cart.html', {'cart': dict(cart=Cart(request)),'list1':list1, 'cartlength': cart.count(), 'tot': cart.summary() })
+    return render(request,'cart.html', {'cart': dict(cart=Cart(request)), 'cartlength': cart.count(), 'tot': cart.summary() })
 
 
 def getprofileonprice(request):
     if "categoryid" in request.session:
         category_id = request.session["categoryid"]
     category = Category.objects.get(category_id=category_id)
-    list1 = Category.objects.all()
     if 'max' in request.GET and 'min' in request.GET:
         print('In GET')
         max_price = request.GET['max']
@@ -127,13 +109,9 @@ def getprofileonprice(request):
         max_price = request.POST['maxPrice']
         min_price = request.POST['minPrice']
         print('In POST')
-    cart = Cart(request)
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     profiles = UserProfile.objects.filter(category_id = category_id ).filter(price__range=(min_price, max_price))
     
-    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category, 'list1': list1, 'cartlength': cart.count(), 'tot': cart.summary(),'stateNames': stateNames,
-                   'cityNames': cityNames })
+    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category})
 
 
 def getprofileonrating(request):
@@ -141,44 +119,29 @@ def getprofileonrating(request):
     if "categoryid" in request.session:
         category_id = request.session["categoryid"]
     category = Category.objects.get(category_id = category_id)
-    list1 = Category.objects.all()
-    cart = Cart(request)
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     min_rating= request.GET['min_rating']
     max_rating= request.GET['max_rating']
     profile_ids=Rating.objects.values_list('profile_id', flat=True).filter(rating__range=(min_rating, max_rating))
     profiles = UserProfile.objects.filter(category_id = category_id ).filter(profile_id__in=profile_ids)
-    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category, 'list1': list1, 'cartlength': cart.count(), 'tot': cart.summary(),'stateNames': stateNames,
-                   'cityNames': cityNames })
+    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category})
 
 def getprofileonstate(request):
-    category_id = request.GET['category_id']
-    cart = Cart(request)
+    if "categoryid" in request.session:
+        category_id = request.session["categoryid"]
     category = Category.objects.get(category_id = category_id)
-
-    list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
-    state = request.GET['state']
+    state = request.POST['stateName']
     user_id = User.objects.values_list('user_id', flat=True).filter(state=state)
-    profiles = UserProfile.objects.filter(category_id = category_id ).filter(user_id=set(user_id))
-    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category, 'list1': list1, 'cartlength': cart.count(), 'tot': cart.summary(), 'stateNames': stateNames,
-                   'cityNames': cityNames })
+    profiles = UserProfile.objects.filter(category_id = category_id ).filter(user_id__in=user_id)
+    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category })
 
 def getprofileonicity(request):
-    category_id = request.GET['category_id']
-    cart = Cart(request)
+    if "categoryid" in request.session:
+        category_id = request.session["categoryid"]
     category = Category.objects.get(category_id = category_id)
-    list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
-    city = request.GET['city']
+    city = request.POST['cityName']
     user_id = User.objects.values_list('user_id', flat=True).filter(city=city)
-
-    profiles = UserProfile.objects.filter(category_id = category_id ).filter(user_id=set(user_id))
-    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category, 'list1': list1, 'cartlength': cart.count(), 'tot': cart.summary(), 'stateNames': stateNames,
-                   'cityNames': cityNames })
+    profiles = UserProfile.objects.filter(category_id = category_id ).filter(user_id__in=user_id)
+    return render(request, 'listservice.html', {'profiles' : profiles, 'category' : category })
 # def getprofileonname(request):
 
 def saverating(request, product_id):
@@ -189,15 +152,12 @@ def saverating(request, product_id):
     print(rating)
     ratingprofile =  Rating(profile = UserProfile.objects.get(profile_id=product_id), rating = rating , description = feedback , user = User.objects.get(user_id = userid) )
     ratingprofile.save()
-    cart = Cart(request)
-    list1 = Category.objects.all()
-    return render(request, 'rating.html', {'profile_id' : product_id, 'list1': list1, 'cartlength': cart.count(), 'tot': cart.summary() })
+
+    return render(request, 'rating.html', {'profile_id' : product_id})
 
     
 
 def redirectrating(request, product_id):
-    cart = Cart(request)
-    list1 = Category.objects.all()
-    return render(request, 'rating.html', {'profile_id' : product_id, 'list1': list1, 'cartlength': cart.count(), 'tot': cart.summary() })
+    return render(request, 'rating.html', {'profile_id' : product_id})
 
 

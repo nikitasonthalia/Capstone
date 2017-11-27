@@ -21,30 +21,29 @@ from django.contrib.auth.models import User as DUser
 from django.contrib.auth import authenticate
 from EventHubApp.registration.models import States, Userprofiledetails
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import send_mail
+import random
+from django.contrib import messages
 
 
 
 # Displays contact.html
 def contact(request):
-    list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     template = loader.get_template('contact.html')
     context = {
 
     }
     # return HttpResponse(template.render(context, request))
-    return render(request, 'contact.html', {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames})
+    return render(request, 'contact.html')
 
 
 # Display aboutUs.html
 def aboutUs(request):
-    list1 = Category.objects.all()
     template = loader.get_template('aboutUs.html')
     context = {
 
     }
-    return render(request, 'aboutUs.html', {'list1': list1})
+    return render(request, 'aboutUs.html')
 
 
 # save Contact Us Form
@@ -61,9 +60,6 @@ def contactUs(request):
 
 
 def signin(request):
-    list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     name = request.GET['username']
     pwd = request.GET['password']
     # message = 'You entered username : %r' % name
@@ -89,25 +85,20 @@ def signin(request):
         request.session["userid"] = user.user_id
         request.session["username"] = user.username
         template = loader.get_template('home.html')
-        return render(request, 'home.html', {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames})
+        return render(request, 'home.html')
     else:
         return render(request, 'nologinsuccess.html')
 
 
 def signup(request):
-    list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     template = loader.get_template('signup.html')
     context = {
     }
-    return render(request, 'signup.html', {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames})
+    return render(request, 'signup.html')
 
 
 def signupSubmit(request):
     list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
     firstname = request.GET['inputFname']
     lastname = request.GET['inputLname']
     email = request.GET['emailId']
@@ -132,4 +123,58 @@ def signupSubmit(request):
                        phone=phone)
     userProfile.user_type_id_id = 1
     userProfile.save()
-    return render(request, 'home.html', {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames})
+    return render(request, 'home.html', {'list1': list1})
+
+def forgotPass(request):
+#     template = loader.get_template('evforgotPass.html')
+#     context = {
+#     }
+    return render(request, 'forgotPass.html')
+
+def sendEmail(request):
+    email = request.GET['emailId']
+    forgotPass(request)
+    if User.objects.filter(email = email).exists():
+        sub = "Event Hub: Password Reset request"
+        s = "abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        passlen = 8
+        p = "".join(random.sample(s, passlen))
+        content = "Hello, \n\nYou requested for new password for your Event Hub account." \
+                  "\nPlease find below your password:\n" \
+                  "\nYour password: %s" % p + "\n" + "\nIf it is not you please change password for security." \
+                                            "\n\nRegards, " \
+                                              "\n\nEvent Hub Team"
+        send_mail(sub, content, 'event.hub.team@gmail.com', [email], fail_silently=False)
+        messages.success(request, 'Your password was sent to your email-Id successfully!')
+        User.objects.filter(email = email).update(password = p)
+        return render(request, 'forgotPass.html')
+    else:
+        # message = "Please enter correct email id."
+        messages.warning(request, 'Please enter correct email id.')
+        return render(request,'forgotPass.html')
+def sendVerifyLink(email, uid):
+    #code here for verification email send. This function will be called in signupsubmit
+    if User.objects.filter(email=email).exists():
+        sub = "Event Hub: Verify your email id"
+        link = "http://127.0.0.1:8000/home/activate_email/%s" % uid
+        content = "Hello, \n\nVerify your Event Hub account." \
+                  "\nClick on following link:\n\n %s" %link + "\n" + "\n\nRegards," \
+                                                                     "Event Hub Team"
+
+        send_mail(sub, content, 'event.hub.team@gmail.com', [email], fail_silently=False)
+
+        message = "We have sent you a verification link to your email. Please verify your account!"
+        return message
+    else:
+        message = 'Failed to send email for verification...'
+        return message
+
+def activate_email(request,uid):
+    try:
+        User.objects.filter(user_id = uid).update(verifyFlag = True)
+        messages.success(request, 'Your account is activated successfully!')
+        return HttpResponse(request, "home.html")
+    except:
+        messages.warning(request, 'Please verify your email id.')
+        return HttpResponse(request, "home.html")
+

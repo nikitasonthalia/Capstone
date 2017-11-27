@@ -31,7 +31,7 @@ def signup(request):
     else:
         form = UserCreationForm()
     list1 = Category.objects.all()
-    return render(request, 'signup.html', {'list1' : list1,  'stateNames': stateNames, 'cityNames':cityNames})
+    return render(request, 'signup.html', {'list1' : list1})
 # Create your views here.
 def getData(request):
     list1 = Category.objects.all()

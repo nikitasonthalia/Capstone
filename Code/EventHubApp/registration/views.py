@@ -20,8 +20,8 @@ categoryName = Category.objects.order_by("category_name")
 # Displays registerServiceDetails.html
 def registerServiceDetails(request):
     list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
+    #stateNames = States.objects.order_by().values('city_state').distinct()
+    #cityNames = States.objects.order_by().values('city_name').distinct()
     if 'userid' in request.session:
         userid = request.session.get('userid')
     else:
@@ -33,7 +33,7 @@ def registerServiceDetails(request):
     context = {
 
     }
-    return render(request, 'registerServiceDetails.html', {'userCategories': userCategories, 'list1': list1, 'stateNames': stateNames, 'cityNames':cityNames})
+    return render(request, 'registerServiceDetails.html', {'userCategories': userCategories})
 
 
 
@@ -48,8 +48,8 @@ def saveCategory(newCat):
 
 def saveUserProfile(request):
     list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
+    #stateNames = States.objects.order_by().values('city_state').distinct()
+    #cityNames = States.objects.order_by().values('city_name').distinct()
 
     if 'userid' in request.session:
         userid = request.session.get('userid')
@@ -131,13 +131,13 @@ def saveUserProfile(request):
     SPDetails.aboutus = request.POST.get('sabout')
     SPDetails.save()
 
-    return render(request, 'home.html', {'list1': list1, 'stateNames': stateNames, 'cityNames':cityNames})
+    return render(request, 'home.html')
 
 
 def account(request):
     list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
+    #stateNames = States.objects.order_by().values('city_state').distinct()
+    #cityNames = States.objects.order_by().values('city_name').distinct()
 
     if 'userid' in request.session:
         userid = request.session.get('userid')
@@ -157,7 +157,7 @@ def account(request):
 
         }
         return render(request, 'regularUserAccount.html',
-                      {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames,
+                      {
                        'userDetails': userDetails})
     else:
         userCategories = Category.objects.filter(
@@ -168,15 +168,14 @@ def account(request):
 
         }
         return render(request, 'serviceUserAccount.html',
-                      {'list1': list1, 'profileDetails': profileDetails, 'stateNames': stateNames,
-                       'cityNames': cityNames,
+                      {'profileDetails': profileDetails,
                        'userDetails': userDetails,'userCategories': userCategories,'DisabledProfiles': DisabledProfiles})
 
 
 def modifyServiceUserProfile(request):
     list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
+    #stateNames = States.objects.order_by().values('city_state').distinct()
+    #cityNames = States.objects.order_by().values('city_name').distinct()
 
     if 'userid' in request.session:
         userid = request.session.get('userid')
@@ -204,6 +203,7 @@ def modifyServiceUserProfile(request):
     # Disable Profile
     if request.POST.get('disableProfile'):
         disableProfile = request.POST.get('disableProfile')
+        print(disableProfile)
         disableProfileInstance = UserProfile.objects.get(profile_id=disableProfile)
         disableProfileInstance.active = False
         disableProfileInstance.save()
@@ -221,19 +221,18 @@ def modifyServiceUserProfile(request):
         profileData = UserProfile.objects.get(user_id=userid, category_id=categoryID)
         profileDetailsData = Userprofiledetails.objects.get(profile_id=profileData.profile_id)
         return render(request, 'serviceProfileUpdate.html',
-                      {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames, 'profileData': profileData,
+                      {'profileData': profileData,
                        'profileDetailsData': profileDetailsData})
     else:
-        return render(request, 'home.html',
-                  {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames})
+        return render(request, 'home.html')
 
 
 def updateUserProfileDetails(request):
     profileID = request.POST.get('pid')
     # print("profile_id:" , profileID)
     list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
+    #stateNames = States.objects.order_by().values('city_state').distinct()
+    #cityNames = States.objects.order_by().values('city_name').distinct()
 
     if 'userid' in request.session:
         userid = request.session.get('userid')
@@ -296,14 +295,13 @@ def updateUserProfileDetails(request):
 
     profileInstance.save()
 
-    return render(request, 'home.html',
-                  {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames})
+    return render(request, 'home.html')
 
 
 def modifyRegularUserProfile(request):
     list1 = Category.objects.all()
-    stateNames = States.objects.order_by().values('city_state').distinct()
-    cityNames = States.objects.order_by().values('city_name').distinct()
+    #stateNames = States.objects.order_by().values('city_state').distinct()
+    #cityNames = States.objects.order_by().values('city_name').distinct()
 
     if 'userid' in request.session:
         userid = request.session.get('userid')
@@ -327,4 +325,4 @@ def modifyRegularUserProfile(request):
         userInstance.pin_number = request.POST.get('pin')
 
     userInstance.save()
-    return render(request, 'home.html', {'list1': list1, 'stateNames': stateNames, 'cityNames': cityNames})
+    return render(request, 'home.html')

@@ -219,6 +219,7 @@ class User(models.Model):
     country = models.CharField(max_length=50)
     pin_number = models.IntegerField()
     phone = PhoneNumberField(blank=True, null=True)
+    verifyFlag = models.BooleanField(default=False)
 
     class Meta:
         managed = False
